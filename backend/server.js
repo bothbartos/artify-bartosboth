@@ -17,11 +17,11 @@ app.use(express.json());
 app.get("/api/arts", async (req, res) => {
   try {
     const arts = await ArtModel.find({});
-    res.json(arts);
+    res.json(arts)
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({error: error.message})
   }
-});
+})
 
 app.patch("/api/arts/:id", async (req, res) => {
   try {
@@ -55,14 +55,25 @@ app.get("/api/arts/:id", async (req,res) => {
     res.status(500).json({ error:error.message })
   }
 })
+// POST - ADD NEW ART
+app.post("/api/arts", async (req, res) => {
+	const art = req.body;
+
+	try {
+		const createdArt = await ArtModel.create(art);
+		return res.json(createdArt);
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
+});
 
 async function main() {
-  await mongoose.connect(MongoURL);
+	await mongoose.connect(MongoURL);;
   console.log("Connected to database.");
 
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}.`);
-  });
+	app.listen(PORT, () => {
+		console.log(`Server is running on http://localhost:${PORT}.`);
+	});
 }
 
 main();
