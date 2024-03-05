@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const { Schema } = mongoose;
+const { Schema, model } = mongoose;
 
 const ArtSchema = new Schema({
   title: String,
@@ -10,8 +10,10 @@ const ArtSchema = new Schema({
   short_description: String,
   medium_display: String,
   artwork_type: String,
-  artist: String,
+  artist_title: String,
   image_id: String
+}, {
+  timestamps: true
 });
 
-export default ("Art", ArtSchema);
+export default model("Art", ArtSchema);
