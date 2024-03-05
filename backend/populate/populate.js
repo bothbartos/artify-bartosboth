@@ -19,7 +19,6 @@ async function populateArtModel() {
     const data = await fetchData(i);
     for (const art of data.data) {
       await ArtModel.create(art);
-      console.log("fasz");
     }
 
   }
