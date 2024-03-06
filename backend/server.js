@@ -33,7 +33,7 @@ app.get("/api/pages/:page", async (req, res) => {
     .skip(skipCount)
     .limit(pageSize);
     const pageItems = await query;
-    res.json(pageItems);
+    res.json({results: pageItems});
   } catch (error) {
     res.status(500).json({error: error.message});
   }
