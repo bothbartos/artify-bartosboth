@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Artwork from "../components/Artwork";
 
 const MainPage = () => {
-	const [artworks, setArtworks] = useState([]);
+	const [artworks, setArtworks] = useState({results: []});
 	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
 
@@ -32,7 +32,7 @@ const MainPage = () => {
 				<p>Loading...</p>
 			) : (
 				<div>
-					{artworks.map((artwork) => (
+					{artworks.results.map((artwork) => (
 					<Artwork artwork={artwork} key={artwork._id}/>
 					))}
 					<div>

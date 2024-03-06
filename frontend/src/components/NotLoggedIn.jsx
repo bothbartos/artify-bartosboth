@@ -6,9 +6,10 @@ const STATES = {
   LANDING: 0,
   LOGIN: 1,
   CREATE: 2,
-}
+};
 
 export default function NotLoggedInPage(props) {
+  const {logIn, createUser} = props;
 
   const [state, setState] = useState(STATES.LANDING);
   const [errorMessage, setErrorMessage] = useState('');
@@ -26,13 +27,13 @@ export default function NotLoggedInPage(props) {
       </>
     }
     {(state === STATES.LOGIN) && <LoginPage
-      logInAsUser={props.logInAsUser}
-      setErrorMessage={setErrorMessage}
+      logIn={logIn}
+      warn={setErrorMessage}
       onBack={()=>setState(STATES.LANDING)}/>
     }
     {(state === STATES.CREATE) && <CreateAccountPage
-      createUser={props.createUser}
-      setErrorMessage={setErrorMessage}
+      createUser={createUser}
+      warn={setErrorMessage}
       onBack={()=>setState(STATES.LANDING)}/>
     }
     <p>{errorMessage}</p>

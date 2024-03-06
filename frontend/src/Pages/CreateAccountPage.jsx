@@ -1,15 +1,16 @@
 export default function CreateAccountPage(props) {
+  const { createUser, warn, onBack } = props;
   const onCreate = async (event) => {
     event.preventDefault();
     const formValues = Object.fromEntries((new FormData(event.target)).entries());
     try {
-      await props.createUser({
-        firstName:formValues['first-name'],
+      await createUser({
+        firstName: formValues['first-name'],
         lastName: formValues['last-name'],
         username: formValues['username']
       });
     } catch (error) {
-      props.setErrorMessage(error.message)
+      warn(error.message)
     }
   }
 
@@ -29,6 +30,6 @@ export default function CreateAccountPage(props) {
       </label>
       <button type="submit">Create</button>
     </form>
-    <button onClick={props.onBack}>Back</button>
+    <button onClick={onBack}>Back</button>
   </>
 }
