@@ -31,8 +31,12 @@ export default function ArtworkDetails(props){
     })
   });
 
-  function handleClick(name){
+  function handleArtistClick(name){
     navigate(`/artist/${name}`)
+  }
+
+  function handleTypeClick(type){
+    navigate(`/type/${type}`)
   }
 
   if(loading){
@@ -47,11 +51,11 @@ export default function ArtworkDetails(props){
     <div className="artworkDetails">
       <img src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}></img>
       <h3>Title: {artwork.title}</h3>
-      <h3 onClick={()=> handleClick(artwork.artist_title)}>Artist name: {artwork.artist_title}</h3>
+      <h3 onClick={()=> handleArtistClick(artwork.artist_title)}>Artist name: {artwork.artist_title}</h3>
       <p>{artwork.date_start === artwork.date_end ? artwork.date_start : `${artwork.date_start} - ${artwork.date_end}`}</p>
       <p>{artwork.description ? deleteHTMLTags(artwork) : "No description."}</p>
       <p>Artwork medium: {artwork.medium_display}</p>
-      <p>Artwork type: {artwork.artwork_type_title}</p>
+      <p onClick={()=> handleTypeClick(artwork.artwork_type_title)}>Artwork type: {artwork.artwork_type_title}</p>
     </div>
   )
 
