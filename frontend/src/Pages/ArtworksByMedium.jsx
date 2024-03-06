@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Artwork from "../components/Artwork";
 
 async function getArtsByMedium(medium){
   try {
@@ -31,9 +32,9 @@ function ArtworksByMedium(){
   }
 
   return <div>
-    {artworksByMedium.map((artwork) => {
-      return <h1 key={artwork._id}>{artwork.title}</h1>
-    })}
+    {artworksByMedium.map((artwork) => 
+      <Artwork key={artwork._id} artwork={artwork}></Artwork>
+    )}
   </div>
 
 
