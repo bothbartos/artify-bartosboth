@@ -66,7 +66,7 @@ app.get("/api/artist/:name", async (req, res) => {
 app.get("/api/medium/:medium", async (req, res) => {
   try {
     const medium = req.params.medium;
-    const filteredByMedium = await ArtModel.find({ medium_display: medium });
+    const filteredByMedium = await ArtModel.find({ medium_display: {$regex: medium, $options: "i"} });
     res.json(filteredByMedium);
   } catch (error) {
     res.status(500).json({error:error.message})
@@ -80,6 +80,16 @@ app.get("/api/artworktype/:type", async (req,res) => {
     res.json(filteredByType);
   } catch (error) {
     res.status(500).json({ error: error.message })
+  }
+});
+
+app.get("/api/title/:title", async (req, res) => {
+  try {
+    const title = req.params.title;
+    const filteredByTitle = await ArtModel.find({ title: {$regex: title, $options: "i"} });
+    res.json(filteredByTitle);
+  } catch (error) {
+    res.status(500).json({error: error.message})
   }
 });
 

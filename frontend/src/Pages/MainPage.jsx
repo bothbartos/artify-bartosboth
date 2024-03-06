@@ -1,10 +1,22 @@
 import { useEffect, useState } from "react";
 import Artwork from "../components/Artwork";
 
+async function fetchByTitle(title){
+  try {
+    const response = await fetch(`/api/title/${title}`);
+    const filterByTitle = await response.json();
+    return filterByTitle;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 const MainPage = () => {
 	const [artworks, setArtworks] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
+  const [filteredArtworks, setFilteredArtworks] = useState([]);
+  const [titleFilterInput, setTitleFilterInput] = useState("");
 
 	useEffect(() => {
 		const fetchArtworks = async () => {
@@ -21,6 +33,19 @@ const MainPage = () => {
 		fetchArtworks();
 	}, [currentPage]);
 
+  useEffect(()=>{
+    fetchByTitle(titleFilterInput)
+    .then((artworks)=> {
+      setFilteredArtworks(artworks)
+    })
+  })
+  function handleChange(e){
+    setTitleFilterInput(e.target.value)
+
+  }
+  console.log(filteredArtworks);
+  console.log();
+
 
 	const hideButton = (pageNumber) => {
 		return pageNumber < 1 || pageNumber > 10;
@@ -32,9 +57,14 @@ const MainPage = () => {
 				<p>Loading...</p>
 			) : (
 				<div>
-					{artworks.map((artwork) => (
-					<Artwork artwork={artwork} key={artwork._id}/>
-					))}
+          <input type="text" name="title" id="filterByTitle" placeholder="Search by Title" onChange={(e)=> handleChange(e)}/>
+					{!filteredArtworks ? 
+            artworks.map((artwork) => (
+            <Artwork artwork={artwork} key={artwork._id}/>
+            )):
+          filteredArtworks.map((artwork)=>(
+            <Artwork artwork={artwork} key={artwork._id}/>
+          ))}
 					<div>
 						<button
 							onClick={() => setCurrentPage(currentPage - 1)}
