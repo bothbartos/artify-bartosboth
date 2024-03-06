@@ -4,11 +4,18 @@ import App from "./App.jsx";
 import "./index.css";
 import ArtworkDetails from "./Pages/ArtworkDetails.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ArtistArtworks from "./Pages/ArtistArtworks.jsx";
 
-const router = createBrowserRouter([{
-  path: "/arts/:id",
-  element: <ArtworkDetails />
-}]);
+const router = createBrowserRouter([
+  {
+    path: "/arts/:id",
+    element: <ArtworkDetails />,
+  },
+  {
+    path: "/artist/:name",
+    element: <ArtistArtworks />
+  }
+]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
