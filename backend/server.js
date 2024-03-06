@@ -17,24 +17,22 @@ app.use(express.json());
 app.get("/api/arts", async (req, res) => {
   try {
     const arts = await ArtModel.find({});
-    res.json(arts)
+    res.json(arts);
   } catch (error) {
-    res.status(500).json({error: error.message})
+    res.status(500).json({ error: error.message });
   }
-})
+});
 
 app.get("/api/pages/:page", async (req, res) => {
   try {
     const pageSize = Number(req.query.pageSize ?? 20);
     const pageNum = Number(req.params.page);
     const skipCount = (pageNum-1)*pageSize;
-    console.log(pageSize, pageNum, skipCount);
-    const query = ArtModel.find()
+    const pageItems = await ArtModel.find()
     .sort('createdAt')
     .skip(skipCount)
     .limit(pageSize);
-    const pageItems = await query;
-    res.json({results: pageItems});
+    res.json(pageItems);
   } catch (error) {
     res.status(500).json({error: error.message});
   }
@@ -59,38 +57,38 @@ app.delete("/api/arts/:id", async (req, res) => {
     const artToDelete = await ArtModel.findByIdAndDelete(req.params.id);
     res.json(artToDelete);
   } catch (error) {
-    res.status(500).json({ error: error.message});
+    res.status(500).json({ error: error.message });
   }
 });
 
-app.get("/api/arts/:id", async (req,res) => {
-  const id = req.params.id
+app.get("/api/arts/:id", async (req, res) => {
+  const id = req.params.id;
   try {
     const art = await ArtModel.findById(id);
-    res.json(art)
+    res.json(art);
   } catch (error) {
-    res.status(500).json({ error:error.message })
+    res.status(500).json({ error: error.message });
   }
-})
+});
 // POST - ADD NEW ART
 app.post("/api/arts", async (req, res) => {
-	const art = req.body;
+  const art = req.body;
 
-	try {
-		const createdArt = await ArtModel.create(art);
-		return res.json(createdArt);
-	} catch (error) {
-		res.status(500).json({ error: error.message });
-	}
+  try {
+    const createdArt = await ArtModel.create(art);
+    return res.json(createdArt);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 async function main() {
-	await mongoose.connect(MongoURL);;
+  await mongoose.connect(MongoURL);
   console.log("Connected to database.");
 
-	app.listen(PORT, () => {
-		console.log(`Server is running on http://localhost:${PORT}.`);
-	});
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}.`);
+  });
 }
 
 main();
