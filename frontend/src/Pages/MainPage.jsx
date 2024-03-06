@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Artwork from "../components/Artwork";
 
 const MainPage = () => {
 	const [artworks, setArtworks] = useState([]);
@@ -32,15 +33,7 @@ const MainPage = () => {
 			) : (
 				<div>
 					{artworks.map((artwork) => (
-						<div key={artwork._id}>
-							<h2>
-								{artwork.title} by {artwork.artist_title}
-							</h2>
-							<img
-								src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
-								alt={artwork.title}
-							/>
-						</div>
+					<Artwork artwork={artwork} key={artwork._id}/>
 					))}
 					<div>
 						<button

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Artwork from "../components/Artwork";
 
 async function fetchArtworks(type){
   try {
@@ -36,7 +37,7 @@ export default function ArtworkType(){
   return (
     <div>
       {artworks.map((artwork) => (
-        <h1 key={artwork._id}>{artwork.title}</h1>
+       <Artwork key={artwork._id} artwork={artwork}/>
       ))}
     </div>
   )
