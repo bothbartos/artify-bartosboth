@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import ArtModel from "./models/ArtModel.js";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
+import User from "./models/User.js";
 
 const PORT = 3000;
 
@@ -11,8 +12,22 @@ dotenv.config({ path: join(fileURLToPath(import.meta.url), "/../.env") });
 const MongoURL = process.env.MONGO_URL;
 const app = express();
 
-// middleware
 app.use(express.json());
+
+app.get("/api/pages/:page", async (req, res) => {
+  const pageSize = Number(req.query.pageSize ?? 20);
+  const pageNum = Number(req.params.page);
+  const skipCount = (pageNum-1)*pageSize;
+  try {
+    const pageItems = await ArtModel.find()
+    .sort('createdAt')
+    .skip(skipCount)
+    .limit(pageSize);
+    res.json({results: pageItems});
+  } catch (error) {
+    res.status(500).json({error: error.message});
+  }
+});
 
 app.get("/api/arts", async (req, res) => {
   try {
@@ -27,9 +42,11 @@ app.get("/api/pages/:page", async (req, res) => {
   try {
     const pageSize = Number(req.query.pageSize ?? 20);
     const pageNum = Number(req.params.page);
-    const skipCount = (pageNum - 1) * pageSize;
-    const query = ArtModel.find().sort("createdAt").skip(skipCount).limit(pageSize);
-    const pageItems = await query;
+    const skipCount = (pageNum-1)*pageSize;
+    const pageItems = await ArtModel.find()
+    .sort('createdAt')
+    .skip(skipCount)
+    .limit(pageSize);
     res.json(pageItems);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -74,18 +91,18 @@ app.patch("/api/arts/:id", async (req, res) => {
       { new: true }
     );
 
-    res.json(artToUpdate);
+    return res.json(artToUpdate);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
 app.delete("/api/arts/:id", async (req, res) => {
   try {
     const artToDelete = await ArtModel.findByIdAndDelete(req.params.id);
-    res.json(artToDelete);
+    return res.json(artToDelete);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message});
   }
 });
 
@@ -93,22 +110,42 @@ app.get("/api/arts/:id", async (req, res) => {
   const id = req.params.id;
   try {
     const art = await ArtModel.findById(id);
-    res.json(art);
+    return res.json(art)
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error:error.message })
   }
-});
-// POST - ADD NEW ART
+})
+
 app.post("/api/arts", async (req, res) => {
   const art = req.body;
 
+	try {
+		const createdArt = await ArtModel.create(art);
+		return res.json(createdArt);
+	} catch (error) {
+		return res.status(500).json({ error: error.message });
+	}
+});
+
+app.get("/api/users/:username", async (req, res) => {
   try {
-    const createdArt = await ArtModel.create(art);
-    return res.json(createdArt);
+    const user = await User.findOne({username: req.params.username});
+    if (user === null) throw {message: 'User not found'};
+    return res.json(user);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message});
   }
 });
+
+app.post("/api/users", async (req, res) => {
+  const {firstName: first_name, lastName: last_name, username} = req.body;
+  try {
+    const user = await User.create({first_name, last_name, username, favorites: []});
+    return res.json(user);
+  } catch (error) {
+    return res.status(500).json({ error: error.message});
+  }
+})
 
 async function main() {
   await mongoose.connect(MongoURL);

@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
 import "./index.css";
 import ArtworkDetails from "./Pages/ArtworkDetails.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -8,6 +7,9 @@ import MainPage from "./Pages/MainPage.jsx";
 import ArtistArtworks from "./Pages/ArtistArtworks.jsx";
 import ArtworksByMedium from "./Pages/ArtworksByMedium.jsx";
 import ArtworkType from "./Pages/ArtworkType.jsx";
+import ManageUser from "./components/ManageUser.jsx";
+
+
 import Layout from "./Pages/Layout.jsx";
 
 const router = createBrowserRouter([
