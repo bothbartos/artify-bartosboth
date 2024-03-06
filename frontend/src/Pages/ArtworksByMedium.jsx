@@ -32,7 +32,7 @@ function ArtworksByMedium(){
 
   return <div>
     {artworksByMedium.map((artwork) => {
-      <h1 key={artwork._id}>{artwork.title}</h1>
+      return <h1 key={artwork._id}>{artwork.title}</h1>
     })}
   </div>
 
