@@ -11,8 +11,8 @@ async function fetchArtwork(id) {
   }
 }
 
-function deleteParagraphTag(artwork){
- return artwork.description.slice(3,-5);
+function deleteHTMLTags(artwork){
+ return artwork.description.replace(/<\/?[^>]+(>|$)/g, "")
 }
 
 export default function ArtworkDetails(props){
@@ -20,8 +20,7 @@ export default function ArtworkDetails(props){
   const [artwork, setArtwork] = useState(null);
   const [loading, setLoading] = useState(true);
   
-  const { id} = useParams();
-  //const artworkID = "65e82a4093503122cad10135"
+  const { id } = useParams();
   useEffect(()=>{
     fetchArtwork(id)
     .then((artwork) => {
@@ -44,7 +43,7 @@ export default function ArtworkDetails(props){
       <h3>Title: {artwork.title}</h3>
       <h3>Artist name: {artwork.artist_title}</h3>
       <p>{artwork.date_start === artwork.date_end ? artwork.date_start : `${artwork.date_start} - ${artwork.date_end}`}</p>
-      <p>{artwork.description ? deleteParagraphTag(artwork) : "No description."}</p>
+      <p>{artwork.description ? deleteHTMLTags(artwork) : "No description."}</p>
       <p>Artwork medium: {artwork.medium_display}</p>
       <p>Artwork type: {artwork.artwork_type_title}</p>
     </div>
