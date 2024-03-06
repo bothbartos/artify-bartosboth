@@ -52,7 +52,6 @@ app.get("/api/artist/:name", async (req, res) => {
 app.get("/api/artworktype/:type", async (req,res) => {
   try {
     const type = req.params.type;
-    console.log(type);
     const filteredByType = await ArtModel.find({ artwork_type_title: type });
     res.json(filteredByType);
   } catch (error) {
