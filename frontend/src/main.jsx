@@ -8,6 +8,8 @@ import MainPage from "./Pages/MainPage.jsx";
 import ArtistArtworks from "./Pages/ArtistArtworks.jsx";
 import ArtworksByMedium from "./Pages/ArtworksByMedium.jsx";
 import ArtworkType from "./Pages/ArtworkType.jsx";
+import AdminPage from "./Pages/AdminPage.jsx";
+import AdminUpdaterPage from "./Pages/AdminUpdaterPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
   {
     path: "/type/:type",
     element: <ArtworkType/>
+  },
+  {
+    path: "/admin",
+    element: <AdminPage />
+  },
+  {
+    path: "/arts/update/:id",
+    element: <AdminUpdaterPage/>
   }
 ]);
 
