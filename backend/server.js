@@ -46,6 +46,16 @@ app.get("/api/artist/:name", async (req, res) => {
   }
 });
 
+app.get("/api/medium/:medium", async (req, res) => {
+  try {
+    const medium = req.params.medium;
+    const filteredByMedium = await ArtModel.find({ medium_display: medium });
+    res.json(filteredByMedium);
+  } catch (error) {
+    res.status(500).json({error:error.message})
+  }
+});
+
 app.get("/api/artworktype/:type", async (req,res) => {
   try {
     const type = req.params.type;
