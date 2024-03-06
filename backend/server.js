@@ -23,6 +23,22 @@ app.get("/api/arts", async (req, res) => {
   }
 })
 
+app.get("/api/pages/:page", async (req, res) => {
+  try {
+    const pageSize = Number(req.query.pageSize) ?? 20;
+    const pageNum = Number(req.params.page);
+    const skipCount = (pageNum-1)*pageSize;
+    const query = ArtModel.find()
+    .sort('createdAt')
+    .skip(skipCount)
+    .limit(pageSize);
+    const pageItems = await query;
+    res.json(pageItems);
+  } catch (error) {
+    res.status(500).json({error: error.message});
+  }
+});
+
 app.patch("/api/arts/:id", async (req, res) => {
   try {
     const artToUpdate = await ArtModel.findByIdAndUpdate(
