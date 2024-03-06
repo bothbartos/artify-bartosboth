@@ -39,6 +39,16 @@ app.get("/api/pages/:page", async (req, res) => {
   }
 });
 
+app.get("/api/artist/:name", async (req, res) => {
+  try {
+    const name = req.params.name;
+    const filteredByName = await ArtModel.find({ artist_title: name });
+    res.json(filteredByName);
+  } catch (error) {
+    res.status(500).json({error:error.message})
+  }
+})
+
 app.patch("/api/arts/:id", async (req, res) => {
   try {
     const artToUpdate = await ArtModel.findByIdAndUpdate(
