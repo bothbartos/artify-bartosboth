@@ -23,7 +23,7 @@ app.get("/api/pages/:page", async (req, res) => {
     .sort('createdAt')
     .skip(skipCount)
     .limit(pageSize);
-    res.json({results: pageItems});
+    res.json(pageItems);
   } catch (error) {
     res.status(500).json({error: error.message});
   }

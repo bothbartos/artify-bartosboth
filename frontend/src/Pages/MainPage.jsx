@@ -21,6 +21,7 @@ const MainPage = () => {
 		fetchArtworks();
 	}, [currentPage]);
 
+
 	const hideButton = (pageNumber) => {
 		return pageNumber < 1 || pageNumber > 10;
 	};
