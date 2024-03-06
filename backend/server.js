@@ -25,9 +25,10 @@ app.get("/api/arts", async (req, res) => {
 
 app.get("/api/pages/:page", async (req, res) => {
   try {
-    const pageSize = Number(req.query.pageSize) ?? 20;
+    const pageSize = Number(req.query.pageSize ?? 20);
     const pageNum = Number(req.params.page);
     const skipCount = (pageNum-1)*pageSize;
+    console.log(pageSize, pageNum, skipCount);
     const query = ArtModel.find()
     .sort('createdAt')
     .skip(skipCount)
