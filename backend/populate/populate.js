@@ -15,7 +15,6 @@ async function fetchData(i){
 }
 
 async function populateArtModel() {
-  ArtModel.findandd
   for(let i = 1; i <= 10; i++) {
     const data = await fetchData(i);
     for (const art of data.data) {
