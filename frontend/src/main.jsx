@@ -5,16 +5,21 @@ import "./index.css";
 import ArtworkDetails from "./Pages/ArtworkDetails.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainPage from "./Pages/MainPage.jsx";
+import ArtistArtworks from "./Pages/ArtistArtworks.jsx";
 
 const router = createBrowserRouter([
-	{
+  {
     path: "/",
     element: <MainPage />
   },
-	{
-		path: "/arts/:id",
-		element: <ArtworkDetails />,
-	},
+  {
+    path: "/arts/:id",
+    element: <ArtworkDetails />,
+  },
+  {
+    path: "/artist/:name",
+    element: <ArtistArtworks />
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
