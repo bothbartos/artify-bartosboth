@@ -8,6 +8,7 @@ import MainPage from "./Pages/MainPage.jsx";
 import ArtistArtworks from "./Pages/ArtistArtworks.jsx";
 import ArtworksByMedium from "./Pages/ArtworksByMedium.jsx";
 import ArtworkType from "./Pages/ArtworkType.jsx";
+import NotLoggedInPage from "./components/NotLoggedInPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/type/:type",
     element: <ArtworkType/>
+  },
+  {
+    path: "/login",
+    element:<NotLoggedInPage/>
   }
 ]);
 
