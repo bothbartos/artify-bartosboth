@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainPage from "./Pages/MainPage.jsx";
 import ArtistArtworks from "./Pages/ArtistArtworks.jsx";
 import ArtworksByMedium from "./Pages/ArtworksByMedium.jsx";
+import ArtworkType from "./Pages/ArtworkType.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   }, 
   { path: "/medium/:medium",
     element: <ArtworksByMedium />
+  },
+  {
+    path: "/type/:type",
+    element: <ArtworkType/>
   }
 ]);
 
