@@ -54,8 +54,8 @@ export default function ArtworkDetails(props){
       <h3 onClick={()=> handleArtistClick(artwork.artist_title)}>Artist name: {artwork.artist_title}</h3>
       <p>{artwork.date_start === artwork.date_end ? artwork.date_start : `${artwork.date_start} - ${artwork.date_end}`}</p>
       <p>{artwork.description ? deleteHTMLTags(artwork) : "No description."}</p>
-      <p>Artwork medium: {artwork.medium_display}</p>
-      <p onClick={()=> handleTypeClick(artwork.artwork_type_title)}>Artwork type: {artwork.artwork_type_title}</p>
+      <p onClick={() => navigate(`/medium/${artwork.medium_display}`)}>Artwork medium: {artwork.medium_display}</p>
+      <p>Artwork type: {artwork.artwork_type_title}</p>
     </div>
   )
 
