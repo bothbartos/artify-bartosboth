@@ -25,7 +25,7 @@ const MainPage = () => {
 	};
 
 	return (
-		<div>
+		<>
 			<h1>Artify</h1>
 			{loading ? (
 				<p>Loading...</p>
@@ -33,24 +33,32 @@ const MainPage = () => {
 				<div>
 					{artworks.map((artwork) => (
 						<div key={artwork._id}>
-							<h2>{artwork.title}</h2>
+							<h2>
+								{artwork.title} by {artwork.artist_title}
+							</h2>
+							<img
+								src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
+								alt={artwork.title}
+							/>
 						</div>
 					))}
-					<button
-						onClick={() => setCurrentPage(currentPage - 1)}
-						style={{ display: hideButton(currentPage - 1) ? "none" : "block" }}
-					>
-						Previous
-					</button>
-					<button
-						onClick={() => setCurrentPage(currentPage + 1)}
-						style={{ display: hideButton(currentPage + 1) ? "none" : "block" }}
-					>
-						Next
-					</button>
+					<div>
+						<button
+							onClick={() => setCurrentPage(currentPage - 1)}
+							style={{ display: hideButton(currentPage - 1) ? "none" : "inline" }}
+						>
+							Previous
+						</button>
+						<button
+							onClick={() => setCurrentPage(currentPage + 1)}
+							style={{ display: hideButton(currentPage + 1) ? "none" : "inline" }}
+						>
+							Next
+						</button>
+					</div>
 				</div>
 			)}
-		</div>
+		</>
 	);
 };
 
