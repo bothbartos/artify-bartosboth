@@ -20,8 +20,8 @@ export default function ArtworkDetails(props){
   const [artwork, setArtwork] = useState(null);
   const [loading, setLoading] = useState(true);
   
-  //const { artworkID } = useParams();
-  const artworkID = "65e82a4093503122cad10135"
+  const { artworkID } = useParams();
+  //const artworkID = "65e82a4093503122cad10135"
   useEffect(()=>{
     fetchArtwork(artworkID)
     .then((artwork) => {
