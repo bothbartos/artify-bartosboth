@@ -29,5 +29,6 @@ export default function CreateAccountPage(props) {
       </label>
       <button type="submit">Create</button>
     </form>
+    <button onClick={props.onBack}>Back</button>
   </>
 }

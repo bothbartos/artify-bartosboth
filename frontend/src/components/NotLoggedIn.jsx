@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import CreateAccountPage from "./CreateAccountPage";
-import LoginPage from "./LoginPage";
+import CreateAccountPage from "../Pages/CreateAccountPage";
+import LoginPage from "../Pages/LoginPage";
 
 const STATES = {
   LANDING: 0,
@@ -20,19 +20,21 @@ export default function NotLoggedInPage(props) {
   }, [state])
 
   return <>
-    <button onClick={() => console.log(state)}>print state</button>
-    <p>{errorMessage}</p>
     {(state === STATES.LANDING) && <>
         <button onClick={() => setState(STATES.LOGIN)}>Log in</button>
-        <p>{errorMessage}</p>
         <button onClick={() => setState(STATES.CREATE)}>Create new account</button>
       </>
     }
-    {(state === STATES.LOGIN)
-    && <LoginPage logInAsUser={props.logInAsUser} setErrorMessage={setErrorMessage}/>
+    {(state === STATES.LOGIN) && <LoginPage
+      logInAsUser={props.logInAsUser}
+      setErrorMessage={setErrorMessage}
+      onBack={()=>setState(STATES.LANDING)}/>
     }
-    {(state === STATES.CREATE)
-    && <CreateAccountPage createUser={props.createUser} setErrorMessage={setErrorMessage}/>
+    {(state === STATES.CREATE) && <CreateAccountPage
+      createUser={props.createUser}
+      setErrorMessage={setErrorMessage}
+      onBack={()=>setState(STATES.LANDING)}/>
     }
+    <p>{errorMessage}</p>
   </>
 }

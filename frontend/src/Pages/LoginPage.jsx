@@ -16,5 +16,6 @@ export default function LoginPage(props) {
       </label>
       <button type="submit">Log in</button>
     </form>
+    <button onClick={props.onBack}>Back</button>
   </>
 }

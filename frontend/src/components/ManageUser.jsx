@@ -1,7 +1,7 @@
 import { useState } from "react";
-import NotLoggedInPage from "./components/NotLoggedInPage";
+import NotLoggedInPage from "./NotLoggedIn.jsx";
 
-function App() {
+export default function ManageUser() {
   const [user, setUser] = useState(null);
 
   async function logInAsUser(username) {
@@ -23,12 +23,11 @@ function App() {
     if (!res.ok) throw {message: 'username already in use'};
     setUser(user);
   }
+
 	return <>
-      <button onClick={()=> console.log(user)}>print user</button>
+      <p>{user ? `logged in as ${user.username}` : 'not logged in'} </p>
       {user
-      ?  <></>
+      ?  <button onClick={() => setUser(null)}>Log out</button>
       : <NotLoggedInPage createUser={createUser} logInAsUser={logInAsUser}></NotLoggedInPage>}
 		</>;
 }
-
-export default App;
