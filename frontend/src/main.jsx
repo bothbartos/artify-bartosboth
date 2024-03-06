@@ -4,14 +4,21 @@ import App from "./App.jsx";
 import "./index.css";
 import ArtworkDetails from "./Pages/ArtworkDetails.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import MainPage from "./Pages/MainPage.jsx";
 
-const router = createBrowserRouter([{
-  path: "/arts/:id",
-  element: <ArtworkDetails />
-}]);
+const router = createBrowserRouter([
+	{
+    path: "/",
+    element: <MainPage />
+  },
+	{
+		path: "/arts/:id",
+		element: <ArtworkDetails />,
+	},
+]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+	<React.StrictMode>
+		<RouterProvider router={router} />
+	</React.StrictMode>
 );
