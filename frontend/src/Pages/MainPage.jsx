@@ -27,7 +27,6 @@ const MainPage = () => {
 
 	return (
 		<>
-			<h1>Artify</h1>
 			{loading ? (
 				<p>Loading...</p>
 			) : (
