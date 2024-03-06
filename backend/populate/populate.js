@@ -1,26 +1,26 @@
 import mongoose from "mongoose";
 import ArtModel from "../models/ArtModel.js";
 import dotenv from "dotenv";
-import {fileURLToPath} from "node:url";
+import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 
-dotenv.config({path: join(fileURLToPath(import.meta.url), "/../../.env")});
+dotenv.config({ path: join(fileURLToPath(import.meta.url), "/../../.env") });
 const MongoURL = process.env.MONGO_URL;
 
-async function fetchData(i){
- 
-      const response = await fetch(`https://api.artic.edu/api/v1/artworks?page=${i}?fields=title,description,short_description,image_id,artist_title,artwork_type_title,medium_display,date_start,date_end`);
-      const data = await response.json();
-      return data;
+async function fetchData(i) {
+  const response = await fetch(
+    `https://api.artic.edu/api/v1/artworks?page=${i}&fields=title%2Cdescription%2Cshort_description%2Cimage_id%2Cartist_title%2Cartwork_type_title%2Cmedium_display%2Cdate_start%2Cdate_end`
+  );
+  const data = await response.json();
+  return data;
 }
 
 async function populateArtModel() {
-  for(let i = 1; i <= 10; i++) {
+  for(let i = 1; i<=10; i++){
     const data = await fetchData(i);
     for (const art of data.data) {
       await ArtModel.create(art);
     }
-
   }
 }
 
@@ -30,4 +30,4 @@ async function main() {
   await mongoose.disconnect();
 }
 
-main()
+main();
