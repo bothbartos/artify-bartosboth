@@ -8,31 +8,36 @@ import MainPage from "./Pages/MainPage.jsx";
 import ArtistArtworks from "./Pages/ArtistArtworks.jsx";
 import ArtworksByMedium from "./Pages/ArtworksByMedium.jsx";
 import ArtworkType from "./Pages/ArtworkType.jsx";
+import Layout from "./Pages/Layout.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainPage />
-  },
-  {
-    path: "/arts/:id",
-    element: <ArtworkDetails />
-  },
-  {
-    path: "/artist/:name",
-    element: <ArtistArtworks />
-  }, 
-  { path: "/medium/:medium",
-    element: <ArtworksByMedium />
-  },
-  {
-    path: "/type/:type",
-    element: <ArtworkType/>
-  }
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <MainPage />,
+      },
+      {
+        path: "/arts/:id",
+        element: <ArtworkDetails />,
+      },
+      {
+        path: "/artist/:name",
+        element: <ArtistArtworks />,
+      },
+      { path: "/medium/:medium", element: <ArtworksByMedium /> },
+      {
+        path: "/type/:type",
+        element: <ArtworkType />,
+      },
+    ],
+ }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-	<React.StrictMode>
-		<RouterProvider router={router} />
-	</React.StrictMode>
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
 );
