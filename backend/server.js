@@ -49,6 +49,16 @@ app.get("/api/artist/:name", async (req, res) => {
   }
 })
 
+app.get("api/medium/:medium", async (req, res)=>{
+  try {
+    const medium = req.params.medium;
+    const filteredByMedium = await ArtModel.find({medium_display: medium});
+    res.json(filteredByMedium);
+  } catch (error) {
+    res.status(500).json({error: error.message})
+  }
+})
+
 app.patch("/api/arts/:id", async (req, res) => {
   try {
     const artToUpdate = await ArtModel.findByIdAndUpdate(

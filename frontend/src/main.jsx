@@ -6,6 +6,7 @@ import ArtworkDetails from "./Pages/ArtworkDetails.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainPage from "./Pages/MainPage.jsx";
 import ArtistArtworks from "./Pages/ArtistArtworks.jsx";
+import ArtworksByMedium from "./Pages/ArtworksByMedium.jsx";
 
 const router = createBrowserRouter([
   {
@@ -14,11 +15,14 @@ const router = createBrowserRouter([
   },
   {
     path: "/arts/:id",
-    element: <ArtworkDetails />,
+    element: <ArtworkDetails />
   },
   {
     path: "/artist/:name",
     element: <ArtistArtworks />
+  }, 
+  { path: "/medium/:medium",
+    element: <ArtworksByMedium />
   }
 ]);
 
