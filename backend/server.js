@@ -42,7 +42,7 @@ app.get("/api/arts", async (req, res) => {
         searchParams[newName] = req.query[oldName];
       }
     }
-
+    console.log(searchParams);
     const key = Object.keys(searchParams)[0];
     const value = Object.values(searchParams)[0];
 

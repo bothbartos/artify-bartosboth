@@ -4,7 +4,7 @@ import Artwork from "../components/Artwork";
 
 async function fetchArtworks(type){
   try {
-    const response = await fetch(`/api/arts?artworktype=${type}`);
+    const response = await fetch(`/api/arts?artwork=${type}`);
     const artworks = await response.json();
     return artworks;
   } catch (error) {
