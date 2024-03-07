@@ -6,6 +6,7 @@ const MainPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
 
+
 	useEffect(() => {
 		const fetchArtworks = async () => {
 			setLoading(true);

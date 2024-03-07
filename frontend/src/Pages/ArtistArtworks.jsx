@@ -35,7 +35,7 @@ export default function ArtistArtworks() {
   }
 
   return (
-    <div>
+    <div className="artworksDiv">
       {artistsArtworks.map((artwork) => (
        <Artwork key={artwork._id} artwork={artwork}/>
       ))}
