@@ -36,13 +36,6 @@ export default function App() {
     setUser(null);
   }
 
-  const routes = {
-    "/": <MainPage/>,
-    "/arts/:id/": <ArtworkDetails/>,
-    "/artist/:name/": <ArtistArtworks/>,
-    "/medium/:medium/": <ArtworksByMedium/>,
-    "/type/:type/": <ArtworkType/>,
-  }
   return <BrowserRouter>
     <Layout user={user} logIn={logIn} logOut={logOut} createUser={createUser}/>
     <Routes>
