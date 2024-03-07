@@ -6,12 +6,12 @@ import ArtistArtworks from "./Pages/ArtistArtworks";
 import ArtworksByMedium from "./Pages/ArtworksByMedium";
 import ArtworkType from "./Pages/ArtworkType";
 import Layout from "./Pages/Layout";
-import ManageUser from "./components/ManageUser";
 
 export default function App() {
   const [user, setUser] = useState(null);
 
   async function logIn(username) {
+    if (username == "") throw {message: 'please enter your username'};
     const res = await fetch(`/api/users/${username}`);
     const user = await res.json();
     if (!res.ok) throw {message: 'user not found'};
@@ -42,12 +42,15 @@ export default function App() {
     "/artist/:name/": <ArtistArtworks/>,
     "/medium/:medium/": <ArtworksByMedium/>,
     "/type/:type/": <ArtworkType/>,
-    "/login/": <ManageUser user={user} logIn={logIn} createUser={createUser} logOut={logOut}/>,
   }
   return <BrowserRouter>
-    <Layout/>
+    <Layout user={user} logIn={logIn} logOut={logOut} createUser={createUser}/>
     <Routes>
-      {Object.entries(routes).map(([path, element]) => <Route key={path} exact path={path} element={element}/>)}
-    </Routes>
+      <Route exact path="/" element={<MainPage/>}/>
+      <Route exact path="/arts/:id/" element={<ArtworkDetails/>}/>
+      <Route exact path="/artist/:name/" element={<ArtistArtworks/>}/>
+      <Route exact path="/medium/:medium/" element={<ArtworksByMedium/>}/>
+      <Route exact path="/type/:type/" element={<ArtworkType/>}/>
+     </Routes>
   </BrowserRouter>
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import CreateAccountPage from "../Pages/CreateAccountPage";
-import LoginPage from "../Pages/LoginPage";
+import CreateAccount from "./CreateAccount";
+import Login from "./Login";
 
 const STATES = {
   LANDING: 0,
@@ -26,12 +26,12 @@ export default function NotLoggedInPage(props) {
         <button onClick={() => setState(STATES.CREATE)}>Create new account</button>
       </>
     }
-    {(state === STATES.LOGIN) && <LoginPage
+    {(state === STATES.LOGIN) && <Login
       logIn={logIn}
       warn={setErrorMessage}
       onBack={()=>setState(STATES.LANDING)}/>
     }
-    {(state === STATES.CREATE) && <CreateAccountPage
+    {(state === STATES.CREATE) && <CreateAccount
       createUser={createUser}
       warn={setErrorMessage}
       onBack={()=>setState(STATES.LANDING)}/>

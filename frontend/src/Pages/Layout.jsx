@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import ManageUser from "../components/ManageUser";
 
 
 export default function Layout(props) {
@@ -19,5 +20,10 @@ export default function Layout(props) {
       <input type="text" onChange={(e) => setSearchedArtist(e.target.value)}></input>
       <button>Search</button>
     </form>
+    <ManageUser
+      user={props.user}
+      logIn={props.logIn}
+      logOut={props.logOut}
+      createUser={props.createUser}/>
   </div>
 }
