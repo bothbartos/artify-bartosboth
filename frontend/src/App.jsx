@@ -38,13 +38,16 @@ export default function App() {
   }
 
   return <BrowserRouter>
-    <Layout user={user} logIn={logIn} logOut={logOut} createUser={createUser}/>
+    <Layout user={user} logIn={logIn} logOut={logOut} createUser={createUser} />
     <Routes>
-      <Route exact path="/" element={<MainPage/>}/>
-      <Route exact path="/arts/:id/" element={<ArtworkDetails/>}/>
-      <Route exact path="/artist/:name/" element={<ArtistArtworks/>}/>
-      <Route exact path="/medium/:medium/" element={<ArtworksByMedium/>}/>
-      <Route exact path="/artwork/:type/" element={<ArtworkType/>}/>
-     </Routes>
+      <Route exact path="/" element={<MainPage />} />
+      <Route exact path="/arts/:id/" element={<ArtworkDetails />} />
+      <Route exact path="/artist/:name/" element={<ArtistArtworks />} />
+      <Route exact path="/medium/:medium/" element={<ArtworksByMedium />} />
+      <Route exact path="/type/:type/" element={<ArtworkType />} />
+      <Route exact path="/admin" element={<AdminPage />} />
+      <Route exact path="/arts/update/:id" element={<AdminUpdaterPage />} />
+      <Route exact path="/arts/create" element={<AdminCreatePage />} />
+    </Routes>
   </BrowserRouter>
 }
