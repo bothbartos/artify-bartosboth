@@ -6,6 +6,7 @@ const MainPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
 
+
 	useEffect(() => {
 		const fetchArtworks = async () => {
 			setLoading(true);
@@ -31,10 +32,10 @@ const MainPage = () => {
 			{loading ? (
 				<p>Loading...</p>
 			) : (
-				<div>
-					{artworks.map((artwork) => (
-					<Artwork artwork={artwork} key={artwork._id}/>
-					))}
+				<div className="artworkDiv">
+            {artworks.map((artwork) => (
+            <Artwork artwork={artwork} key={artwork._id}/>
+            ))}
 					<div>
 						<button
 							onClick={() => setCurrentPage(currentPage - 1)}

@@ -5,7 +5,6 @@ import ArtModel from "./models/ArtModel.js";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import User from "./models/User.js";
-import { serialize } from "node:v8";
 
 const PORT = 3000;
 
@@ -26,36 +25,6 @@ app.get("/api/pages/:page", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
-// app.get("/api/artist/:name", async (req, res) => {
-//   try {
-//     const name = req.params.name;
-//     const filteredByName = await ArtModel.find({ artist_title: name });
-//     res.json(filteredByName);
-//   } catch (error) {
-//     res.status(500).json({error:error.message})
-//   }
-// });
-
-// app.get("/api/medium/:medium", async (req, res) => {
-//   try {
-//     const medium = req.params.medium;
-//     const filteredByMedium = await ArtModel.find({ medium_display: medium });
-//     res.json(filteredByMedium);
-//   } catch (error) {
-//     res.status(500).json({error:error.message})
-//   }
-// });
-
-// app.get("/api/artworktype/:type", async (req,res) => {
-//   try {
-//     const type = req.params.type;
-//     const filteredByType = await ArtModel.find({ artwork_type_title: type });
-//     res.json(filteredByType);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message })
-//   }
-// });
 
 app.get("/api/arts", async (req, res) => {
   const MAPPING = {

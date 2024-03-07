@@ -31,7 +31,7 @@ function ArtworksByMedium(){
     </div>
   }
 
-  return <div>
+  return <div className="artworkDiv">
     {artworksByMedium.map((artwork) => 
       <Artwork key={artwork._id} artwork={artwork}></Artwork>
     )}
