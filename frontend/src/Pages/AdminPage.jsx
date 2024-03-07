@@ -35,7 +35,7 @@ const AdminPage = () => {
 				method: "DELETE",
 			});
 			const deletedArt = await response.json();
-			console.log("(Art successfully deleted: ", deletedArt);
+			console.log("(Art deleted successfully: ", deletedArt);
 			fetchArtworks();
 		} catch (error) {
 			console.log(error);

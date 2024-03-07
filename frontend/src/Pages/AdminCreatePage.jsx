@@ -9,7 +9,7 @@ const AdminCreatePage = () => {
 		setArtwork({ ...artwork, [fieldName]: value });
 	};
 
-	const handleSubmit = async () => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			const response = await fetch("/api/arts", {
@@ -20,7 +20,7 @@ const AdminCreatePage = () => {
 				body: JSON.stringify(artwork),
 			});
 			const createdArt = await response.json();
-			console.log(createdArt);
+			console.log("Art created successfully: ", createdArt);
 			navigate("/admin");
 		} catch (error) {}
 	};

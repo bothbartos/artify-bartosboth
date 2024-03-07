@@ -34,7 +34,7 @@ const AdminUpdaterPage = () => {
 				body: JSON.stringify(artwork),
 			});
 			const updatedArt = await response.json();
-			console.log(updatedArt);
+			console.log("Art updated successfully: ", updatedArt);
 			navigate("/admin");
 		} catch (error) {
 			console.log(error);
