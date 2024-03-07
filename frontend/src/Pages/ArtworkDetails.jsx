@@ -42,6 +42,7 @@ export default function ArtworkDetails(){
   return (
     <div className="artworkDetails">
       <img src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`} alt="art"></img>
+      <div className="details"> 
       <h3>Title: {artwork.title}</h3>
       <h3 onClick={()=> navigate(`/artist/${artwork.artist_title}`)}>Artist name: {artwork.artist_title}</h3>
       <p>{artwork.date_start === artwork.date_end ? artwork.date_start : `${artwork.date_start} - ${artwork.date_end}`}</p>
