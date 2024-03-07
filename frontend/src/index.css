@@ -1,17 +1,17 @@
-.navBar{
-  display:flex;
+.navBar {
+  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
 }
 
-.login{
-  display:flex;
+.login {
+  display: flex;
   align-items: center;
   gap: 5px;
 }
 
-form[name="create"]{
+form[name="create"] {
   display: flex;
   flex-direction: column;
   align-items: end;
@@ -21,29 +21,28 @@ form[name="create"]{
   background-color: white;
 }
 
-form[name="create"]>label{
+form[name="create"] > label {
   width: fit-content;
 }
 
-.navBar  .registerButtons{
-  display:  flex;
+.navBar .registerButtons {
+  display: flex;
   justify-content: center;
   width: 100%;
   gap: 1rem;
 }
 
-.artworkDiv img{
+.artworkDiv img {
   height: 30rem;
 }
-.artworkItem h2{
-  display: none ;
+.artworkItem h2 {
+  display: none;
 }
-.artworkItem{
+.artworkItem {
   position: relative;
 }
 
- 
- .artworkItem::after {
+.artworkItem::after {
   content: attr(data-content);
   position: absolute;
   top: 70%; /* Align the overlay to the top of the .artworkItem */
@@ -59,15 +58,13 @@ form[name="create"]>label{
   padding: 10px;
   opacity: 0; /* Initially hidden */
   transition: opacity 0.3s ease; /* Smooth transition */
- }
- 
- .artworkItem:hover::after {
+}
+
+.artworkItem:hover::after {
   opacity: 1; /* Visible on hover */
- }
- 
+}
 
-
-.artworkDiv{
+.artworkDiv {
   display: flex;
   flex-wrap: wrap;
   flex-flow: row wrap;
@@ -76,5 +73,10 @@ form[name="create"]>label{
   text-align: center;
   width: fit-content;
   position: relative;
-};
+}
 
+body {
+  background-image: url(freestyle_background.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+}
