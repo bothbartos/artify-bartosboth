@@ -8,7 +8,7 @@
   z-index: 1000; 
   width: 100%; 
   background-color: white;
- };
+ }
 
  .navBar a{
   text-decoration: none;
@@ -45,10 +45,12 @@ form[name="create"] > label {
 
 .artworkDiv img {
   height: 30rem;
+  top:5rem;
+  bottom: 10rem;
+  box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.6);
 }
-.artworkItem h2 {
-  display: none;
-}
+
+
 .artworkItem {
   position: relative;
 }
@@ -67,6 +69,7 @@ form[name="create"] > label {
   text-align: center;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   padding: 10px;
+  gap: 10px;
   opacity: 0; /* Initially hidden */
   transition: opacity 0.3s ease; /* Smooth transition */
 }
@@ -80,14 +83,86 @@ form[name="create"] > label {
   flex-wrap: wrap;
   flex-flow: row wrap;
   justify-content: center;
-  align-items: baseline;
+  align-items: center;
   text-align: center;
-  width: fit-content;
-  position: relative;
+  margin-top: 6rem;
+  margin-bottom: 3rem;
+  width: 100%; /* Ensure it takes up the full width */
+  position: relative; /* Keep this for positioning the pagination buttons */
+ }
+ 
+ .paginatonButtons {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
+ 
+
+button {
+  padding: 7px 17px;
+  border: unset;
+  border-radius: 15px;
+  color: #212121;
+  z-index: 1;
+  background: #e8e8e8;
+  position: relative;
+  font-weight: 1000;
+  font-size: 17px;
+  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  transition: all 250ms;
+  overflow: hidden;
+ }
+ 
+ button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 15px;
+  background-color: #212121;
+  z-index: -1;
+  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  transition: all 250ms
+ }
+ 
+ button:hover {
+  color: #e8e8e8;
+ }
+ 
+ button:hover::before {
+  width: 100%;
+ }
+ 
 
 body {
   background-image: url(freestyle_background.jpg);
   background-size: cover;
   background-attachment: fixed;
+}
+
+
+.selectSearch {
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 3px;
+  
+  overflow: hidden;
+  position: relative;
+}
+.selectSearch, .selectSearch select { width: 240px;}
+select:focus { outline: none; }
+.selectSearch select {
+  height: 34px;
+  padding: 5px 0 5px 5px;
+  background: transparent;
+  border: none;
+  
+  /*hide default down arrow in webkit */
+  -webkit-appearance: none; 
 }

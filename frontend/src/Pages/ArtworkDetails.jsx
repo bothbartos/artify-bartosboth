@@ -47,7 +47,7 @@ export default function ArtworkDetails(){
       <p>{artwork.date_start === artwork.date_end ? artwork.date_start : `${artwork.date_start} - ${artwork.date_end}`}</p>
       <p>{artwork.description ? deleteHTMLTags(artwork) : "No description."}</p>
       <p onClick={() => navigate(`/medium/${artwork.medium_display}`)}>Artwork medium: {artwork.medium_display}</p>
-      <p onClick={() => navigate(`/type/${artwork.artwork_type_title}`)}>Artwork type: {artwork.artwork_type_title}</p>
+      <p onClick={() => navigate(`/artwork/${artwork.artwork_type_title}`)}>Artwork type: {artwork.artwork_type_title}</p>
     </div>
   )
 }

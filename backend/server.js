@@ -44,7 +44,7 @@ app.get("/api/arts", async (req, res) => {
     }
     const key = Object.keys(searchParams)[0];
     const value = Object.values(searchParams)[0];
-    const filteredByField = await ArtModel.find({[`${key}`]: {$regex: value, $options: "i"}});
+    const filteredByField = await ArtModel.find({[key]: {$regex: value, $options: "i"}});
     res.json(filteredByField);
   } catch (error) {
     res.status(500).json({ error: error.message });
