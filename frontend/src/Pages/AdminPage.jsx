@@ -46,8 +46,10 @@ const AdminPage = () => {
 						<td>{artwork.date_end}</td>
 						<td>{artwork.medium_display}</td>
 						<td>{artwork.image_id}</td>
-						<button onClick={() => handleUpdate(artwork._id)}>Update</button>
-						<button onClick={() => handleDelete(artwork._id)}>Delete</button>
+						<td>
+							<button onClick={() => handleUpdate(artwork._id)}>Update</button>
+							<button onClick={() => handleDelete(artwork._id)}>Delete</button>
+						</td>
 					</tr>
 				))}
 		</table>

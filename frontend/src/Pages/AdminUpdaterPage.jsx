@@ -16,15 +16,13 @@ const AdminUpdaterPage = () => {
 			}
 		};
 		fetchArtworkData(id);
-	}, []);
+	}, [id]);
 
-	console.log(id);
+	const handleChange = (fieldName, value) => {
+		setArtwork({ ...artwork, [fieldName]: value });
+	};
 
-	const handleSubmit = () => {};
-
-  const handleOnChange = () => {
-    
-  }
+	console.log(artwork);
 
 	if (!artwork) {
 		return (
@@ -37,29 +35,66 @@ const AdminUpdaterPage = () => {
 	return (
 		<>
 			<div>
-				<form onSubmit={handleSubmit}>
-					<label htmlFor="artistName">Artist Name: </label>
-					<input type="text" name="artistName" id="artistName" value={artwork && artwork.artist_title} />
+				<h1>Update Art:</h1>
+				<form>
+					<label htmlFor="artist_title">Artist Name: </label>
+					<input
+						type="text"
+						name="artist_title"
+						id="artist_title"
+						value={artwork && artwork.artist_title}
+						onChange={(e) => handleChange("artist_title", e.target.value)}
+					/>
 					<br />
 
-					<label htmlFor="artName">Art Name: </label>
-					<input type="text" name="artName" id="artName" value={artwork && artwork.title} />
+					<label htmlFor="title">Art Name: </label>
+					<input
+						type="text"
+						name="title"
+						id="title"
+						value={artwork && artwork.title}
+						onChange={(e) => handleChange("title", e.target.value)}
+					/>
 					<br />
 
-					<label htmlFor="dateStart">Date Start: </label>
-					<input type="text" name="dateStart" id="dateStart" value={artwork && artwork.date_start} />
+					<label htmlFor="date_start">Date Start: </label>
+					<input
+						type="text"
+						name="date_start"
+						id="date_start"
+						value={artwork && artwork.date_start}
+						onChange={(e) => handleChange("date_start", e.target.value)}
+					/>
 					<br />
 
-					<label htmlFor="dateEnd">Date End: </label>
-					<input type="text" name="dateEnd" id="dateEnd" value={artwork && artwork.date_end} />
+					<label htmlFor="date_end">Date End: </label>
+					<input
+						type="text"
+						name="date_end"
+						id="date_end"
+						value={artwork && artwork.date_end}
+						onChange={(e) => handleChange("date_end", e.target.value)}
+					/>
 					<br />
 
-					<label htmlFor="medium">Medium: </label>
-					<input type="text" name="medium" id="medium" value={artwork && artwork.medium_display} />
+					<label htmlFor="medium_display">Medium: </label>
+					<input
+						type="text"
+						name="medium_display"
+						id="medium_display"
+						value={artwork && artwork.medium_display}
+						onChange={(e) => handleChange("medium_display", e.target.value)}
+					/>
 					<br />
 
-					<label htmlFor="imageId">Image Id: </label>
-					<input type="text" name="imageId" id="imageId" value={artwork && artwork.image_id} />
+					<label htmlFor="image_id">Image Id: </label>
+					<input
+						type="text"
+						name="image_id"
+						id="image_id"
+						value={artwork && artwork.image_id}
+						onChange={(e) => handleChange("image_id", e.target.value)}
+					/>
 					<br />
 
 					<button type="submit">Submit!</button>
