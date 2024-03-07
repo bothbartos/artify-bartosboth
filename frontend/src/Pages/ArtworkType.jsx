@@ -35,7 +35,7 @@ export default function ArtworkType(){
   }
 
   return (
-    <div>
+    <div className="artworksDiv">
       {artworks.map((artwork) => (
        <Artwork key={artwork._id} artwork={artwork}/>
       ))}
