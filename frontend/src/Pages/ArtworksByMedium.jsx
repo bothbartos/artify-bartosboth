@@ -4,7 +4,7 @@ import Artwork from "../components/Artwork";
 
 async function getArtsByMedium(medium){
   try {
-    const response = await fetch(`/api/medium/${medium}`);
+    const response = await fetch(`/api/arts?medium=${medium}`);
     const artworks = await response.json();
     return artworks;
   } catch (error) {
@@ -31,7 +31,7 @@ function ArtworksByMedium(){
     </div>
   }
 
-  return <div>
+  return <div className="artworkDiv">
     {artworksByMedium.map((artwork) => 
       <Artwork key={artwork._id} artwork={artwork}></Artwork>
     )}

@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import Artwork from "../components/Artwork";
 
 const MainPage = () => {
-	const [artworks, setArtworks] = useState([]);
+	const [artworks, setArtworks] = useState({results: []});
 	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
+
 
 	useEffect(() => {
 		const fetchArtworks = async () => {
@@ -21,18 +22,18 @@ const MainPage = () => {
 		fetchArtworks();
 	}, [currentPage]);
 
+
 	const hideButton = (pageNumber) => {
 		return pageNumber < 1 || pageNumber > 10;
 	};
-
+  console.log(artworks);
 	return (
 		<>
-			<h1>Artify</h1>
 			{loading ? (
 				<p>Loading...</p>
 			) : (
 				<div>
-					{artworks.map((artwork) => (
+					{artworks.results.map((artwork) => (
 					<Artwork artwork={artwork} key={artwork._id}/>
 					))}
 					<div>

@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import ArtModel from "./models/ArtModel.js";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
+import User from "./models/User.js";
 
 const PORT = 3000;
 
@@ -11,58 +12,45 @@ dotenv.config({ path: join(fileURLToPath(import.meta.url), "/../.env") });
 const MongoURL = process.env.MONGO_URL;
 const app = express();
 
-// middleware
 app.use(express.json());
-
-app.get("/api/arts", async (req, res) => {
-  try {
-    const arts = await ArtModel.find({});
-    res.json(arts);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
 
 app.get("/api/pages/:page", async (req, res) => {
   try {
     const pageSize = Number(req.query.pageSize ?? 20);
     const pageNum = Number(req.params.page);
-    const skipCount = (pageNum - 1) * pageSize;
-    const query = ArtModel.find().sort("createdAt").skip(skipCount).limit(pageSize);
-    const pageItems = await query;
-    res.json(pageItems);
+    const skipCount = (pageNum-1)*pageSize;
+    const pageItems = await ArtModel.find()
+    .sort('createdAt')
+    .skip(skipCount)
+    .limit(pageSize);
+    res.json({results: pageItems});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.get("/api/artist/:name", async (req, res) => {
+app.get("/api/arts", async (req, res) => {
+  const MAPPING = {
+    artwork: "artwork_type_title",
+    medium: "medium_display",
+    artist: "artist_title",
+  };
   try {
-    const name = req.params.name;
-    const filteredByName = await ArtModel.find({ artist_title: name });
-    res.json(filteredByName);
-  } catch (error) {
-    res.status(500).json({error:error.message})
-  }
-});
+    const searchParams = {};
+    for (const [oldName, newName] of Object.entries(MAPPING)) {
+      if (req.query[oldName] !== undefined) {
+        searchParams[newName] = req.query[oldName];
+      }
+    }
+    console.log(searchParams);
+    const key = Object.keys(searchParams)[0];
+    const value = Object.values(searchParams)[0];
 
-app.get("/api/medium/:medium", async (req, res) => {
-  try {
-    const medium = req.params.medium;
-    const filteredByMedium = await ArtModel.find({ medium_display: medium });
-    res.json(filteredByMedium);
+    const filteredByField = await ArtModel.find({[`${key}`]: {$regex: value, $options: "i"}});
+    console.log(filteredByField);
+    res.json(filteredByField);
   } catch (error) {
-    res.status(500).json({error:error.message})
-  }
-});
-
-app.get("/api/artworktype/:type", async (req,res) => {
-  try {
-    const type = req.params.type;
-    const filteredByType = await ArtModel.find({ artwork_type_title: type });
-    res.json(filteredByType);
-  } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -74,18 +62,18 @@ app.patch("/api/arts/:id", async (req, res) => {
       { new: true }
     );
 
-    res.json(artToUpdate);
+    return res.json(artToUpdate);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
 app.delete("/api/arts/:id", async (req, res) => {
   try {
     const artToDelete = await ArtModel.findByIdAndDelete(req.params.id);
-    res.json(artToDelete);
+    return res.json(artToDelete);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -93,12 +81,12 @@ app.get("/api/arts/:id", async (req, res) => {
   const id = req.params.id;
   try {
     const art = await ArtModel.findById(id);
-    res.json(art);
+    return res.json(art);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
-// POST - ADD NEW ART
+
 app.post("/api/arts", async (req, res) => {
   const art = req.body;
 
@@ -106,7 +94,27 @@ app.post("/api/arts", async (req, res) => {
     const createdArt = await ArtModel.create(art);
     return res.json(createdArt);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+app.get("/api/users/:username", async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    if (user === null) throw { message: "User not found" };
+    return res.json(user);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+app.post("/api/users", async (req, res) => {
+  const { firstName: first_name, lastName: last_name, username } = req.body;
+  try {
+    const user = await User.create({ first_name, last_name, username, favorites: [] });
+    return res.json(user);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
   }
 });
 
