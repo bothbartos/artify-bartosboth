@@ -1,11 +1,13 @@
 export default function LoginPage(props) {
+  const { logIn, warn, onBack } = props;
   const onLogin = async (event) => {
     event.preventDefault();
     const formValues = Object.fromEntries((new FormData(event.target)).entries());
     try {
-      await props.logInAsUser(formValues.username);
+      console.log('asd', formValues.username);
+      await logIn(formValues.username);
     } catch (error) {
-      props.setErrorMessage(error.message);
+      warn(error.message);
     }
   }
   return <>
@@ -16,6 +18,6 @@ export default function LoginPage(props) {
       </label>
       <button type="submit">Log in</button>
     </form>
-    <button onClick={props.onBack}>Back</button>
+    <button onClick={onBack}>Back</button>
   </>
 }
