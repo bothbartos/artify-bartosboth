@@ -29,7 +29,10 @@ const router = createBrowserRouter([
         path: "/artist/:name",
         element: <ArtistArtworks />,
       },
-      { path: "/medium/:medium", element: <ArtworksByMedium /> },
+      { 
+        path: "/medium/:medium", 
+        element: <ArtworksByMedium /> 
+      },
       {
         path: "/type/:type",
         element: <ArtworkType />,

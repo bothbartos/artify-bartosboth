@@ -15,7 +15,7 @@ function deleteHTMLTags(artwork){
  return artwork.description.replace(/<\/?[^>]+(>|$)/g, "")
 }
 
-export default function ArtworkDetails(props){
+export default function ArtworkDetails(){
 
   const [artwork, setArtwork] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,14 +31,6 @@ export default function ArtworkDetails(props){
     })
   });
 
-  function handleArtistClick(name){
-    navigate(`/artist/${name}`)
-  }
-
-  function handleTypeClick(type){
-    navigate(`/type/${type}`)
-  }
-
   if(loading){
     return (
       <div className="loading">
@@ -49,14 +41,13 @@ export default function ArtworkDetails(props){
 
   return (
     <div className="artworkDetails">
-      <img src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}></img>
+      <img src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`} alt="art"></img>
       <h3>Title: {artwork.title}</h3>
-      <h3 onClick={()=> handleArtistClick(artwork.artist_title)}>Artist name: {artwork.artist_title}</h3>
+      <h3 onClick={()=> navigate(`/artist/${artwork.artist_title}`)}>Artist name: {artwork.artist_title}</h3>
       <p>{artwork.date_start === artwork.date_end ? artwork.date_start : `${artwork.date_start} - ${artwork.date_end}`}</p>
       <p>{artwork.description ? deleteHTMLTags(artwork) : "No description."}</p>
       <p onClick={() => navigate(`/medium/${artwork.medium_display}`)}>Artwork medium: {artwork.medium_display}</p>
       <p onClick={() => navigate(`/type/${artwork.artwork_type_title}`)}>Artwork type: {artwork.artwork_type_title}</p>
     </div>
   )
-
 }
