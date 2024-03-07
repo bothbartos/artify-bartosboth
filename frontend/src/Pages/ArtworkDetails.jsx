@@ -44,9 +44,9 @@ export default function ArtworkDetails() {
         alt="art"
       ></img>
       <div className="details">
-        <h3>Title: {artwork.title}</h3>
+        <h3>Title: {artwork.title ? artwork.title : "No title"}</h3>
         <h3 onClick={() => navigate(`/artist/${artwork.artist_title}`)} style={{cursor:"pointer"}}>
-          Artist name: {artwork.artist_title}
+          Artist name: {artwork.artist_title ? artwork.artist_title : "Unknown"}
         </h3>
         <p>
           {artwork.date_start === artwork.date_end
