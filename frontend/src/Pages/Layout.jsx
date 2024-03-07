@@ -16,6 +16,9 @@ export default function Layout(props) {
   }
 
   return <div className="navBar">
+    <h1>
+    <Link style={{textDecoration: "none", color: "black"}}to={"/"}>ARTIFY</Link>
+    </h1>
     <form onSubmit={handleSubmit}>
       <select name="" id="" onChange={(e)=>setDropdownSelection(e.target.value)}>
         <option value="" disabled selected>Select Search Filter</option>
@@ -26,7 +29,6 @@ export default function Layout(props) {
       <input type="text" onChange={(e) => setSearchedArtist(e.target.value)}></input>
       <button>Search</button>
     </form>
-    <Link to={"/"}>ARTIFY</Link>
     <ManageUser
       user={props.user}
       logIn={props.logIn}
