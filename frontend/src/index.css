@@ -5,16 +5,34 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  z-index: 1000; 
-  width: 100%; 
+  z-index: 1000;
+  width: 100%;
   background-color: white;
- };
+}
 
- .navBar a{
+.navBar a {
   text-decoration: none;
   color: black;
- }
- 
+}
+
+.artworkDetails {
+  margin-top: 27rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.artworkDetails img {
+  box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.6);
+}
+
+.details {
+  background-color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin-top: 10px;
+}
 
 .login {
   display: flex;
@@ -29,7 +47,7 @@ form[name="create"] {
   position: absolute;
   top: 50px;
   z-index: 1;
-  background-color: rgba(255, 255, 255, 0.8)    ;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 form[name="create"] > label {
@@ -87,7 +105,7 @@ form[name="create"] > label {
 }
 
 body {
-  background-image: url(freestyle_background.jpg);
+  background-image: url(/src/freestyle_background.jpg);
   background-size: cover;
   background-attachment: fixed;
 }

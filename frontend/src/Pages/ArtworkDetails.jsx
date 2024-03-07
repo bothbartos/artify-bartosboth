@@ -42,12 +42,14 @@ export default function ArtworkDetails(){
   return (
     <div className="artworkDetails">
       <img src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`} alt="art"></img>
+      <div className="details"> 
       <h3>Title: {artwork.title}</h3>
       <h3 onClick={()=> navigate(`/artist/${artwork.artist_title}`)}>Artist name: {artwork.artist_title}</h3>
       <p>{artwork.date_start === artwork.date_end ? artwork.date_start : `${artwork.date_start} - ${artwork.date_end}`}</p>
       <p>{artwork.description ? deleteHTMLTags(artwork) : "No description."}</p>
       <p onClick={() => navigate(`/medium/${artwork.medium_display}`)}>Artwork medium: {artwork.medium_display}</p>
       <p onClick={() => navigate(`/type/${artwork.artwork_type_title}`)}>Artwork type: {artwork.artwork_type_title}</p>
+      </div>
     </div>
   )
 }
