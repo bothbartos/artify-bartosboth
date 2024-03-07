@@ -5,6 +5,7 @@ import ArtModel from "./models/ArtModel.js";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import User from "./models/User.js";
+import { serialize } from "node:v8";
 
 const PORT = 3000;
 
@@ -18,11 +19,8 @@ app.get("/api/pages/:page", async (req, res) => {
   try {
     const pageSize = Number(req.query.pageSize ?? 20);
     const pageNum = Number(req.params.page);
-    const skipCount = (pageNum-1)*pageSize;
-    const pageItems = await ArtModel.find()
-    .sort('createdAt')
-    .skip(skipCount)
-    .limit(pageSize);
+    const skipCount = (pageNum - 1) * pageSize;
+    const pageItems = await ArtModel.find().sort("createdAt").skip(skipCount).limit(pageSize);
     res.json(pageItems);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -61,10 +59,10 @@ app.get("/api/pages/:page", async (req, res) => {
 
 app.get("/api/arts", async (req, res) => {
   const MAPPING = {
-    artwork: 'artwork_type_title',
-    medium: 'medium_display',
-    artist: 'artist_title',
-  }
+    artwork: "artwork_type_title",
+    medium: "medium_display",
+    artist: "artist_title",
+  };
   try {
     const searchParams = {};
     for (const [oldName, newName] of Object.entries(MAPPING)) {
@@ -72,11 +70,15 @@ app.get("/api/arts", async (req, res) => {
         searchParams[newName] = req.query[oldName];
       }
     }
-    console.log(searchParams);
-    const filteredByField = await ArtModel.find(searchParams);
+
+    const key = Object.keys(searchParams)[0];
+    const value = Object.values(searchParams)[0];
+
+    const filteredByField = await ArtModel.find({[`${key}`]: {$regex: value, $options: "i"}});
+    console.log(filteredByField);
     res.json(filteredByField);
   } catch (error) {
-    res.status(500).json({error:error.message})
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -99,7 +101,7 @@ app.delete("/api/arts/:id", async (req, res) => {
     const artToDelete = await ArtModel.findByIdAndDelete(req.params.id);
     return res.json(artToDelete);
   } catch (error) {
-    return res.status(500).json({ error: error.message});
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -107,42 +109,42 @@ app.get("/api/arts/:id", async (req, res) => {
   const id = req.params.id;
   try {
     const art = await ArtModel.findById(id);
-    return res.json(art)
+    return res.json(art);
   } catch (error) {
-    return res.status(500).json({ error:error.message })
+    return res.status(500).json({ error: error.message });
   }
-})
+});
 
 app.post("/api/arts", async (req, res) => {
   const art = req.body;
 
-	try {
-		const createdArt = await ArtModel.create(art);
-		return res.json(createdArt);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
+  try {
+    const createdArt = await ArtModel.create(art);
+    return res.json(createdArt);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 });
 
 app.get("/api/users/:username", async (req, res) => {
   try {
-    const user = await User.findOne({username: req.params.username});
-    if (user === null) throw {message: 'User not found'};
+    const user = await User.findOne({ username: req.params.username });
+    if (user === null) throw { message: "User not found" };
     return res.json(user);
   } catch (error) {
-    return res.status(500).json({ error: error.message});
+    return res.status(500).json({ error: error.message });
   }
 });
 
 app.post("/api/users", async (req, res) => {
-  const {firstName: first_name, lastName: last_name, username} = req.body;
+  const { firstName: first_name, lastName: last_name, username } = req.body;
   try {
-    const user = await User.create({first_name, last_name, username, favorites: []});
+    const user = await User.create({ first_name, last_name, username, favorites: [] });
     return res.json(user);
   } catch (error) {
-    return res.status(500).json({ error: error.message});
+    return res.status(500).json({ error: error.message });
   }
-})
+});
 
 async function main() {
   await mongoose.connect(MongoURL);
