@@ -44,7 +44,7 @@ const AdminPage = () => {
 	};
 
 	return (
-		<>
+		<div className="adminPage">
 			<nav>
 				<h1>Admin Page</h1>
 				<button onClick={handleCreate}>Add New Art</button>
@@ -76,7 +76,7 @@ const AdminPage = () => {
 						))}
 				</tbody>
 			</table>
-		</>
+		</div>
 	);
 };
 
