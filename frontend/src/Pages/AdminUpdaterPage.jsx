@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const AdminUpdaterPage = () => {
 	const [artwork, setArtwork] = useState(null);
 	const { id } = useParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchArtworkData = async (id) => {
@@ -22,6 +23,24 @@ const AdminUpdaterPage = () => {
 		setArtwork({ ...artwork, [fieldName]: value });
 	};
 
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			const response = await fetch(`/api/arts/${id}`, {
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(artwork),
+			});
+			const updatedArt = await response.json();
+			console.log(updatedArt);
+			navigate("/admin");
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	console.log(artwork);
 
 	if (!artwork) {
@@ -36,7 +55,7 @@ const AdminUpdaterPage = () => {
 		<>
 			<div>
 				<h1>Update Art:</h1>
-				<form>
+				<form onSubmit={handleSubmit}>
 					<label htmlFor="artist_title">Artist Name: </label>
 					<input
 						type="text"
@@ -97,7 +116,7 @@ const AdminUpdaterPage = () => {
 					/>
 					<br />
 
-					<button type="submit">Submit!</button>
+					<button type="submit">Update!</button>
 				</form>
 			</div>
 		</>

@@ -10,35 +10,38 @@ import ArtworksByMedium from "./Pages/ArtworksByMedium.jsx";
 import ArtworkType from "./Pages/ArtworkType.jsx";
 import AdminPage from "./Pages/AdminPage.jsx";
 import AdminUpdaterPage from "./Pages/AdminUpdaterPage.jsx";
+import AdminCreatePage from "./Pages/AdminCreatePage.jsx";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <MainPage />
-  },
-  {
-    path: "/arts/:id",
-    element: <ArtworkDetails />
-  },
-  {
-    path: "/artist/:name",
-    element: <ArtistArtworks />
-  }, 
-  { path: "/medium/:medium",
-    element: <ArtworksByMedium />
-  },
-  {
-    path: "/type/:type",
-    element: <ArtworkType/>
-  },
-  {
-    path: "/admin",
-    element: <AdminPage />
-  },
-  {
-    path: "/arts/update/:id",
-    element: <AdminUpdaterPage/>
-  }
+	{
+		path: "/",
+		element: <MainPage />,
+	},
+	{
+		path: "/arts/:id",
+		element: <ArtworkDetails />,
+	},
+	{
+		path: "/artist/:name",
+		element: <ArtistArtworks />,
+	},
+	{ path: "/medium/:medium", element: <ArtworksByMedium /> },
+	{
+		path: "/type/:type",
+		element: <ArtworkType />,
+	},
+	{
+		path: "/admin",
+		element: <AdminPage />,
+	},
+	{
+		path: "/arts/update/:id",
+		element: <AdminUpdaterPage />,
+	},
+	{
+		path: "/arts/create",
+		element: <AdminCreatePage />,
+	},
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
