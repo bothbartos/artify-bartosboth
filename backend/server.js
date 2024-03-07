@@ -42,14 +42,12 @@ app.get("/api/arts", async (req, res) => {
         searchParams[newName] = req.query[oldName];
       }
     }
-    console.log(searchParams);
     let query = ArtModel.find({});
     Object.entries(searchParams).forEach(([key, value]) => {
       query = query.find({[key]: {$regex: value, $options: "i"}});
     });
 
     const filteredByField = await query;
-    console.log(filteredByField);
     res.json(filteredByField);
   } catch (error) {
     res.status(500).json({ error: error.message });

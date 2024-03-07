@@ -28,14 +28,14 @@ export default function ArtworkType(){
 
   if(loading){
     return(
-      <div>
+      <div className="artworkDiv">
         <h1>LOADING...</h1>
       </div>
     )
   }
 
   return (
-    <div className="artworksDiv">
+    <div className="artworkDiv">
       {artworks.map((artwork) => (
        <Artwork key={artwork._id} artwork={artwork}/>
       ))}

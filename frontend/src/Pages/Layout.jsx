@@ -16,13 +16,15 @@ export default function Layout(props) {
   }
 
   return <div className="navBar">
-    <Link to={"/"}>ARTIFY</Link>
+    <h1>
+    <Link style={{textDecoration: "none", color: "black"}}to={"/"}>ARTIFY</Link>
+    </h1>
     <form onSubmit={handleSubmit}>
-      <select name="" id="" defaultValue="" onChange={(e)=>setDropdownSelection(e.target.value)}>
+      <select name="selectSearch" className="selectSearch" defaultValue="" onChange={(e)=>setDropdownSelection(e.target.value)}>
         <option value="" disabled>Select Search Filter</option>
         <option value="artist">Search by Artist</option>
         <option value="medium">Search by Medium</option>
-        <option value="artworktype">Search by Artwork</option>
+        <option value="artwork">Search by Artwork Type</option>
       </select>
       <input type="text" onChange={(e) => setSearchedArtist(e.target.value)}></input>
       <button>Search</button>
