@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AdminPage = () => {
-	const [artworks, setArtworks] = useState([]);
+	const [artworks, setArtworks] = useState({ results: [] });
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 
@@ -17,6 +17,7 @@ const AdminPage = () => {
 			console.log(error);
 		}
 	};
+	
 	useEffect(() => {
 		fetchArtworks();
 	}, []);
@@ -58,8 +59,8 @@ const AdminPage = () => {
 						<th>Medium</th>
 						<th>Image Id</th>
 					</tr>
-					{artworks &&
-						artworks.map((artwork) => (
+					{artworks.results &&
+						artworks.results.map((artwork) => (
 							<tr key={artwork._id}>
 								<td>{artwork.artist_title}</td>
 								<td>{artwork.title}</td>
