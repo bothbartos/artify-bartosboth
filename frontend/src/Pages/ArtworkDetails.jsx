@@ -29,7 +29,7 @@ export default function ArtworkDetails(){
       setArtwork(artwork);
       setLoading(false)
     })
-  });
+  }, [id]);
 
   if(loading){
     return (
