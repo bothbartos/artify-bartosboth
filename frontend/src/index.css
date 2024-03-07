@@ -1,11 +1,31 @@
-#root{
-  display: grid;
+.navBar{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
 }
+
+.login{
+  display:flex;
+  align-items: center;
+  gap: 5px;
+}
+
+form[name="create"]{
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+form[name="create"]>label{
+  width: fit-content;
+}
+
+
 .artworkDiv img{
   height: 30rem;
 }
 
 .artworkDiv{
   display: flex;
-flex-wrap:
+
 }
