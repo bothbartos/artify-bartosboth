@@ -16,17 +16,17 @@ export default function Layout(props) {
   }
 
   return <div className="navBar">
-    <Link to={"/"}>ARTIFY</Link>
     <form onSubmit={handleSubmit}>
       <select name="" id="" onChange={(e)=>setDropdownSelection(e.target.value)}>
         <option value="" disabled selected>Select Search Filter</option>
         <option value="artist">Search by Artist</option>
         <option value="medium">Search by Medium</option>
-        <option value="artworktype">Search by Artwork</option>
+        <option value="artwork">Search by Artwork Type</option>
       </select>
       <input type="text" onChange={(e) => setSearchedArtist(e.target.value)}></input>
       <button>Search</button>
     </form>
+    <Link to={"/"}>ARTIFY</Link>
     <ManageUser
       user={props.user}
       logIn={props.logIn}

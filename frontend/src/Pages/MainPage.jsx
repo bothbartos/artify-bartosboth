@@ -36,7 +36,7 @@ const MainPage = () => {
 					{artworks.results.map((artwork) => (
 					<Artwork artwork={artwork} key={artwork._id}/>
 					))}
-					<div>
+					<div className="paginatonButtons">
 						<button
 							onClick={() => setCurrentPage(currentPage - 1)}
 							style={{ display: hideButton(currentPage - 1) ? "none" : "inline" }}

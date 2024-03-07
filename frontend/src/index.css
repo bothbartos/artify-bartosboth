@@ -15,17 +15,66 @@ form[name="create"]{
   display: flex;
   flex-direction: column;
   align-items: end;
+  position: absolute;
+  top: 50px;
+  z-index: 1;
+  background-color: white;
 }
+
 form[name="create"]>label{
   width: fit-content;
 }
 
+.navBar  .registerButtons{
+  display:  flex;
+  justify-content: center;
+  width: 100%;
+  gap: 1rem;
+}
 
 .artworkDiv img{
   height: 30rem;
 }
+.artworkItem h2{
+  display: none ;
+}
+.artworkItem{
+  position: relative;
+}
+
+ 
+ .artworkItem::after {
+  content: attr(data-content);
+  position: absolute;
+  top: 70%; /* Align the overlay to the top of the .artworkItem */
+  left: 0; /* Align the overlay to the left of the .artworkItem */
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 10px;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease; /* Smooth transition */
+ }
+ 
+ .artworkItem:hover::after {
+  opacity: 1; /* Visible on hover */
+ }
+ 
+
 
 .artworkDiv{
   display: flex;
+  flex-wrap: wrap;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: baseline;
+  text-align: center;
+  width: fit-content;
+  position: relative;
+};
 
-}
