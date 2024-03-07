@@ -1,0 +1,11 @@
+#root{
+  display: grid;
+}
+.artworkDiv img{
+  height: 30rem;
+}
+
+.artworkDiv{
+  display: flex;
+flex-wrap:
+}
