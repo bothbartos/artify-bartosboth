@@ -4,7 +4,7 @@ import Artwork from "../components/Artwork";
 
 async function getArtsByMedium(medium){
   try {
-    const response = await fetch(`/api/medium/${medium}`);
+    const response = await fetch(`/api/arts?medium=${medium}`);
     const artworks = await response.json();
     return artworks;
   } catch (error) {

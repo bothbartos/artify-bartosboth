@@ -21,13 +21,13 @@ const MainPage = () => {
 		fetchArtworks();
 	}, [currentPage]);
 
+
 	const hideButton = (pageNumber) => {
 		return pageNumber < 1 || pageNumber > 10;
 	};
-
+  console.log(artworks);
 	return (
 		<>
-			<h1>Artify</h1>
 			{loading ? (
 				<p>Loading...</p>
 			) : (

@@ -29,7 +29,7 @@ export default function ArtworkDetails(props){
       setArtwork(artwork);
       setLoading(false)
     })
-  });
+  }, [id]);
 
   function handleArtistClick(name){
     navigate(`/artist/${name}`)
@@ -55,7 +55,7 @@ export default function ArtworkDetails(props){
       <p>{artwork.date_start === artwork.date_end ? artwork.date_start : `${artwork.date_start} - ${artwork.date_end}`}</p>
       <p>{artwork.description ? deleteHTMLTags(artwork) : "No description."}</p>
       <p onClick={() => navigate(`/medium/${artwork.medium_display}`)}>Artwork medium: {artwork.medium_display}</p>
-      <p>Artwork type: {artwork.artwork_type_title}</p>
+      <p onClick={() => navigate(`/type/${artwork.artwork_type_title}`)}>Artwork type: {artwork.artwork_type_title}</p>
     </div>
   )
 

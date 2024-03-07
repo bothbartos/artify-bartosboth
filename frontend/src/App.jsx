@@ -5,6 +5,7 @@ import ArtworkDetails from "./Pages/ArtworkDetails";
 import ArtistArtworks from "./Pages/ArtistArtworks";
 import ArtworksByMedium from "./Pages/ArtworksByMedium";
 import ArtworkType from "./Pages/ArtworkType";
+import Layout from "./Pages/Layout";
 import ManageUser from "./components/ManageUser";
 
 export default function App() {
@@ -44,8 +45,9 @@ export default function App() {
     "/login/": <ManageUser user={user} logIn={logIn} createUser={createUser} logOut={logOut}/>,
   }
   return <BrowserRouter>
+    <Layout/>
     <Routes>
-      {Object.entries(routes).map(([path, element]) => <Route key={path} path={path} element={element}/>)}
+      {Object.entries(routes).map(([path, element]) => <Route key={path} exact path={path} element={element}/>)}
     </Routes>
   </BrowserRouter>
 }
