@@ -8,7 +8,7 @@ const Artwork = ({ artwork }) => {
       onClick={() => navigate(`/arts/${artwork._id}`)}
       className="artworkItem"
       data-content={
-       ` ${artwork.title} by ${artwork.artist_title}`
+       ` ${artwork.title ? artwork.title : "No title"} by ${artwork.artist_title ? artwork.artist_title : "Unknown"}`
       }
     >
       <div className="image-container">
