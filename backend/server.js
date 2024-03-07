@@ -42,14 +42,20 @@ app.get("/api/arts", async (req, res) => {
         searchParams[newName] = req.query[oldName];
       }
     }
-    const key = Object.keys(searchParams)[0];
-    const value = Object.values(searchParams)[0];
-    const filteredByField = await ArtModel.find({[key]: {$regex: value, $options: "i"}});
+    console.log(searchParams);
+    let query = ArtModel.find({});
+    Object.entries(searchParams).forEach(([key, value]) => {
+      query = query.find({[key]: {$regex: value, $options: "i"}});
+    });
+
+    const filteredByField = await query;
     res.json(filteredByField);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
+
 
 app.patch("/api/arts/:id", async (req, res) => {
   try {

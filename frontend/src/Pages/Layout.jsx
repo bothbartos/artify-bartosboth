@@ -20,8 +20,8 @@ export default function Layout(props) {
     <Link style={{textDecoration: "none", color: "black"}}to={"/"}>ARTIFY</Link>
     </h1>
     <form onSubmit={handleSubmit}>
-      <select name="selectSearch" className="selectSearch" onChange={(e)=>setDropdownSelection(e.target.value)}>
-        <option value="" disabled selected>Select Search Filter</option>
+      <select name="selectSearch" className="selectSearch" defaultValue="" onChange={(e)=>setDropdownSelection(e.target.value)}>
+        <option value="" disabled>Select Search Filter</option>
         <option value="artist">Search by Artist</option>
         <option value="medium">Search by Medium</option>
         <option value="artwork">Search by Artwork Type</option>
