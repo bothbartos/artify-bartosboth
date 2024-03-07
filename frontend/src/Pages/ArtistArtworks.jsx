@@ -4,7 +4,7 @@ import Artwork from "../components/Artwork";
 
 async function fetchArtworks(name){
   try {
-    const response = await fetch(`/api/artist/${name}`);
+    const response = await fetch(`/api/arts?artist=${name}`);
     const artworks = await response.json();
     return artworks;
   } catch (error) {
@@ -24,7 +24,7 @@ export default function ArtistArtworks() {
       setArtistsArtworks(artworks);
       setLoading(false);
     })
-  })
+  }, [name])
 
   if(loading){
     return (
