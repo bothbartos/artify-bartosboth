@@ -11,10 +11,10 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   async function logIn(username) {
-    if (username == "") throw {message: 'please enter your username'};
+    if (username == "") throw {message: 'Please enter your username'};
     const res = await fetch(`/api/users/${username}`);
     const user = await res.json();
-    if (!res.ok) throw {message: 'user not found'};
+    if (!res.ok) throw {message: 'User not found'};
     setUser(user);
   }
 
@@ -27,12 +27,12 @@ export default function App() {
       body: JSON.stringify(userData)
     });
     const user = await res.json();
-    if (!res.ok) throw {message: 'username already in use'};
+    if (!res.ok) throw {message: 'Username already in use'};
     setUser(user);
   }
 
   async function logOut() {
-    if (user === null) throw {message: 'already logged out'};
+    if (user === null) throw {message: 'Already logged out'};
     setUser(null);
   }
 
@@ -43,7 +43,7 @@ export default function App() {
       <Route exact path="/arts/:id/" element={<ArtworkDetails/>}/>
       <Route exact path="/artist/:name/" element={<ArtistArtworks/>}/>
       <Route exact path="/medium/:medium/" element={<ArtworksByMedium/>}/>
-      <Route exact path="/type/:type/" element={<ArtworkType/>}/>
+      <Route exact path="/artwork/:type/" element={<ArtworkType/>}/>
      </Routes>
   </BrowserRouter>
 }

@@ -28,8 +28,10 @@ export default function CreateAccountPage(props) {
         username:
         <input type="text" name="username"></input>
       </label>
+      <div className="registerButtons">
       <button type="submit">Create</button>
+      <button type="button" onClick={onBack}>Cancel</button>
+      </div>
     </form>
-    <button onClick={onBack}>Back</button>
   </>
 }
