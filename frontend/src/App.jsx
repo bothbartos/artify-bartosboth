@@ -21,9 +21,7 @@ export default function App() {
   async function createUser(userData) {
     const res = await fetch('/api/users', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData)
     });
     const user = await res.json();

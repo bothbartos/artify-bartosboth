@@ -18,8 +18,8 @@ export default function Layout(props) {
   return <div className="navBar">
     <Link to={"/"}>ARTIFY</Link>
     <form onSubmit={handleSubmit}>
-      <select name="" id="" onChange={(e)=>setDropdownSelection(e.target.value)}>
-        <option value="" disabled selected>Select Search Filter</option>
+      <select name="" id="" defaultValue="" onChange={(e)=>setDropdownSelection(e.target.value)}>
+        <option value="" disabled>Select Search Filter</option>
         <option value="artist">Search by Artist</option>
         <option value="medium">Search by Medium</option>
         <option value="artworktype">Search by Artwork</option>
