@@ -15,30 +15,6 @@ const app = express();
 app.use(express.json());
 
 app.get("/api/pages/:page", async (req, res) => {
-  const pageSize = Number(req.query.pageSize ?? 20);
-  const pageNum = Number(req.params.page);
-  const skipCount = (pageNum-1)*pageSize;
-  try {
-    const pageItems = await ArtModel.find()
-    .sort('createdAt')
-    .skip(skipCount)
-    .limit(pageSize);
-    res.json(pageItems);
-  } catch (error) {
-    res.status(500).json({error: error.message});
-  }
-});
-
-app.get("/api/arts", async (req, res) => {
-  try {
-    const arts = await ArtModel.find({});
-    res.json(arts);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.get("/api/pages/:page", async (req, res) => {
   try {
     const pageSize = Number(req.query.pageSize ?? 20);
     const pageNum = Number(req.params.page);
@@ -53,33 +29,54 @@ app.get("/api/pages/:page", async (req, res) => {
   }
 });
 
-app.get("/api/artist/:name", async (req, res) => {
+// app.get("/api/artist/:name", async (req, res) => {
+//   try {
+//     const name = req.params.name;
+//     const filteredByName = await ArtModel.find({ artist_title: name });
+//     res.json(filteredByName);
+//   } catch (error) {
+//     res.status(500).json({error:error.message})
+//   }
+// });
+
+// app.get("/api/medium/:medium", async (req, res) => {
+//   try {
+//     const medium = req.params.medium;
+//     const filteredByMedium = await ArtModel.find({ medium_display: medium });
+//     res.json(filteredByMedium);
+//   } catch (error) {
+//     res.status(500).json({error:error.message})
+//   }
+// });
+
+// app.get("/api/artworktype/:type", async (req,res) => {
+//   try {
+//     const type = req.params.type;
+//     const filteredByType = await ArtModel.find({ artwork_type_title: type });
+//     res.json(filteredByType);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message })
+//   }
+// });
+
+app.get("/api/arts", async (req, res) => {
+  const MAPPING = {
+    artwork: 'artwork_type_title',
+    medium: 'medium_display',
+    artist: 'artist_title',
+  }
   try {
-    const name = req.params.name;
-    const filteredByName = await ArtModel.find({ artist_title: name });
-    res.json(filteredByName);
+    const searchParams = {};
+    for (const [oldName, newName] of Object.entries(MAPPING)) {
+      if (req.query[oldName] !== undefined) {
+        searchParams[newName] = req.query[oldName];
+      }
+    }
+    console.log(searchParams);
+    const filteredByField = await ArtModel.find(searchParams);
+    res.json(filteredByField);
   } catch (error) {
     res.status(500).json({error:error.message})
-  }
-});
-
-app.get("/api/medium/:medium", async (req, res) => {
-  try {
-    const medium = req.params.medium;
-    const filteredByMedium = await ArtModel.find({ medium_display: medium });
-    res.json(filteredByMedium);
-  } catch (error) {
-    res.status(500).json({error:error.message})
-  }
-});
-
-app.get("/api/artworktype/:type", async (req,res) => {
-  try {
-    const type = req.params.type;
-    const filteredByType = await ArtModel.find({ artwork_type_title: type });
-    res.json(filteredByType);
-  } catch (error) {
-    res.status(500).json({ error: error.message })
   }
 });
 

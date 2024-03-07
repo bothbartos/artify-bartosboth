@@ -29,7 +29,7 @@ export default function ArtworkDetails(props){
       setArtwork(artwork);
       setLoading(false)
     })
-  });
+  }, [id]);
 
   function handleArtistClick(name){
     navigate(`/artist/${name}`)
