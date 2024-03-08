@@ -25,7 +25,7 @@ export default function CreateAccountPage(props) {
         <input type="text" name="last-name"></input>
       </label>
       <label>
-        username:
+        Username:
         <input type="text" name="username"></input>
       </label>
       <div className="registerButtons">

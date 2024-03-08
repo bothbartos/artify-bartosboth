@@ -13,7 +13,7 @@ export default function LoginPage(props) {
   return <>
     <form name="login" onSubmit={onLogin}>
       <label>
-        username: 
+        Username: 
         <input type="text" name="username"></input>
       </label>
       <button type="submit">Log in</button>
