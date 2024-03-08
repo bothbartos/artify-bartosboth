@@ -44,7 +44,7 @@ export default function App() {
       <Route exact path="/arts/:id/" element={<ArtworkDetails />} />
       <Route exact path="/artist/:name/" element={<ArtistArtworks />} />
       <Route exact path="/medium/:medium/" element={<ArtworksByMedium />} />
-      <Route exact path="/type/:type/" element={<ArtworkType />} />
+      <Route exact path="/artwork/:type/" element={<ArtworkType />} />
       <Route exact path="/admin" element={<AdminPage />} />
       <Route exact path="/arts/update/:id" element={<AdminUpdaterPage />} />
       <Route exact path="/arts/create" element={<AdminCreatePage />} />
