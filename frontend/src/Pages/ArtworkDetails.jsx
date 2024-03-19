@@ -11,11 +11,24 @@ async function fetchArtwork(id) {
   }
 }
 
+async function postSavedArtwork(userId, artworkId){
+  try {
+    const response = await fetch(`/api/users/${userId}/${artworkId}`, {
+      method: "PATCH",
+      body: artworkId
+    })
+    const postedId = await response.json()
+    return postedId;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 function deleteHTMLTags(artwork) {
   return artwork.description.replace(/<\/?[^>]+(>|$)/g, "");
 }
 
-export default function ArtworkDetails() {
+export default function ArtworkDetails({user}) {
   const [artwork, setArtwork] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -28,6 +41,14 @@ export default function ArtworkDetails() {
       setLoading(false);
     });
   }, [id]);
+
+  function handleSave(artworkId){
+    if(user){
+      postSavedArtwork(user._id, artworkId).then((res) => console.log(res));
+    } else {
+      alert("Please log in to save an artwork!")
+    }
+  }
 
   if (loading) {
     return (
@@ -62,6 +83,7 @@ export default function ArtworkDetails() {
         <p onClick={() => navigate(`/artwork/${artwork.artwork_type_title}`)} style={{cursor: "pointer"}}>
           Artwork type: {artwork.artwork_type_title}
         </p>
+        <button type="button" onClick={() => handleSave(artwork._id)}>Save to favorites</button>
       </div>
     </div>
   );

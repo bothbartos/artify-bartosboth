@@ -18,12 +18,9 @@ app.get("/api/pages/:page", async (req, res) => {
   try {
     const pageSize = Number(req.query.pageSize ?? 20);
     const pageNum = Number(req.params.page);
-    const skipCount = (pageNum-1)*pageSize;
-    const pageItems = await ArtModel.find()
-    .sort('createdAt')
-    .skip(skipCount)
-    .limit(pageSize);
-    res.json({results: pageItems});
+    const skipCount = (pageNum - 1) * pageSize;
+    const pageItems = await ArtModel.find().sort("createdAt").skip(skipCount).limit(pageSize);
+    res.json({ results: pageItems });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -44,7 +41,7 @@ app.get("/api/arts", async (req, res) => {
     }
     let query = ArtModel.find({});
     Object.entries(searchParams).forEach(([key, value]) => {
-      query = query.find({[key]: {$regex: value, $options: "i"}});
+      query = query.find({ [key]: { $regex: value, $options: "i" } });
     });
 
     const filteredByField = await query;
@@ -53,8 +50,6 @@ app.get("/api/arts", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
-
 
 app.patch("/api/arts/:id", async (req, res) => {
   try {
@@ -115,6 +110,21 @@ app.post("/api/users", async (req, res) => {
   try {
     const user = await User.create({ first_name, last_name, username, favorites: [] });
     return res.json(user);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+app.patch("/api/users/:id/:artworkId", async (req, res) => {
+  const userId = req.params.id;
+  const artworkId = req.params.artworkId;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $push: { favorites: artworkId } },
+      { new: true, upsert: false }
+    );
+    res.json(updatedUser);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
