@@ -4,7 +4,7 @@ import Artwork from "../components/Artwork";
 
 async function fetchArtworks(name){
   try {
-    const response = await fetch(`/api/arts?artist=${name}`);
+    const response = await fetch(`/api/arts?search=${name}`);
     const artworks = await response.json();
     return artworks;
   } catch (error) {
@@ -12,19 +12,20 @@ async function fetchArtworks(name){
   }
 }
 
-export default function ArtistArtworks() {
+export default function SearchResults() {
   const [loading, setLoading] = useState(true);
   const [artistsArtworks, setArtistsArtworks] = useState([]);
 
-  const { name } = useParams();
+  const { search } = useParams();
+  console.log(search);
 
   useEffect(()=> {
-    fetchArtworks(name)
+    fetchArtworks(search)
     .then((artworks) => {
       setArtistsArtworks(artworks);
       setLoading(false);
     })
-  }, [name])
+  }, [search])
 
   if(loading){
     return (
