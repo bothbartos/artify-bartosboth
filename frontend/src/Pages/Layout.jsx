@@ -12,7 +12,7 @@ export default function Layout(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    navigate(`/${dropdownSelection}/${searchedArtist}`)
+    navigate(`/search/${searchedArtist}`)
   }
 
   return <div className="navBar">
@@ -20,12 +20,12 @@ export default function Layout(props) {
     <Link style={{textDecoration: "none", color: "black"}}to={"/"}>ARTIFY</Link>
     </h1>
     <form onSubmit={handleSubmit}>
-      <select name="selectSearch" className="selectSearch" defaultValue="" onChange={(e)=>setDropdownSelection(e.target.value)}>
+ {/*      <select name="selectSearch" className="selectSearch" defaultValue="" onChange={(e)=>setDropdownSelection(e.target.value)}>
         <option value="" disabled>Select Search Filter</option>
         <option value="artist">Search by Artist</option>
         <option value="medium">Search by Medium</option>
         <option value="artwork">Search by Artwork Type</option>
-      </select>
+      </select> */}
       <input type="text" onChange={(e) => setSearchedArtist(e.target.value)}></input>
       <button>Search</button>
     </form>
