@@ -10,6 +10,7 @@ import AdminPage from "./Pages/AdminPage";
 import AdminUpdaterPage from "./Pages/AdminUpdaterPage";
 import AdminCreatePage from "./Pages/AdminCreatePage";
 import SearchResults from "./Pages/SearchResults";
+import SearchFilterPage from "./Pages/SearchFilterPage";
 
 export default function App() {
 	const [user, setUser] = useState(null);
@@ -50,6 +51,7 @@ export default function App() {
       <Route exact path="/arts/update/:id" element={<AdminUpdaterPage />} />
       <Route exact path="/arts/create" element={<AdminCreatePage />} />
       <Route exact path="/search/:search" element={<SearchResults/>}/>
+      <Route exact path="/filterSearch/" element={<SearchFilterPage/>}/>
     </Routes>
   </BrowserRouter>
 }

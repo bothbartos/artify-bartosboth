@@ -29,22 +29,14 @@ app.get("/api/pages/:page", async (req, res) => {
   }
 });
 
-app.get("/api/arts", async (req, res) => {
-  const MAPPING = {
-    artwork: "artwork_type_title",
-    medium: "medium_display",
-    artist: "artist_title",
-  };
+app.get("/api/filteredSearch", async (req, res) => {
+  
   try {
-    const searchParams = {};
-    for (const [oldName, newName] of Object.entries(MAPPING)) {
-      if (req.query[oldName] !== undefined) {
-        searchParams[newName] = req.query[oldName];
-      }
-    }
+    const searchParams = req.query;
+    
     let query = ArtModel.find({});
     Object.entries(searchParams).forEach(([key, value]) => {
-      query = query.find({[key]: {$regex: value, $options: "i"}});
+      query = query.find({ [key]: { $regex: value, $options: "i" } });
     });
 
     const filteredByField = await query;
