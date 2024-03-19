@@ -113,7 +113,7 @@ app.post("/api/arts", async (req, res) => {
 
 app.get("/api/users/:username", async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username });
+    const user = await User.findOne({ username: req.params.username }).populate("favorites");
     if (user === null) throw { message: "User not found" };
     return res.json(user);
   } catch (error) {
@@ -144,7 +144,7 @@ app.patch("/api/users/:id/:artworkId", async (req, res) => {
       userId,
       { $push: { favorites: artworkId } },
       { new: true, upsert: false }
-    );
+    ).populate('favorites');
     res.json(updatedUser);
   } catch (error) {
     return res.status(500).json({ error: error.message });

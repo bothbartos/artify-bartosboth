@@ -36,11 +36,15 @@ export default function App() {
     setUser(null);
   }
 
+  async function updateUser(updatedUser){
+    setUser(updatedUser);
+  }
+
   return <BrowserRouter>
     <Layout user={user} logIn={logIn} logOut={logOut} createUser={createUser} />
     <Routes>
       <Route exact path="/" element={<MainPage />} />
-      <Route exact path="/arts/:id/" element={<ArtworkDetails />} />
+      <Route exact path="/arts/:id/" element={<ArtworkDetails user={user} updateUser={updateUser}/>} />
       <Route exact path="/admin" element={<AdminPage />} />
       <Route exact path="/arts/update/:id" element={<AdminUpdaterPage />} />
       <Route exact path="/arts/create" element={<AdminCreatePage />} />
