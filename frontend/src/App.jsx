@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useAppContext, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPage from "./Pages/MainPage";
 import ArtworkDetails from "./Pages/ArtworkDetails";
@@ -10,29 +10,29 @@ import SearchResults from "./Pages/SearchResults";
 import SearchFilterPage from "./Pages/SearchFilterPage";
 
 export default function App() {
-	const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
   async function logIn(username) {
-    if (username == "") throw {message: 'Please enter your username'};
+    if (username == "") throw { message: "Please enter your username" };
     const res = await fetch(`/api/users/${username}`);
     const user = await res.json();
-    if (!res.ok) throw {message: 'User not found'};
+    if (!res.ok) throw { message: "User not found" };
     setUser(user);
   }
 
   async function createUser(userData) {
-    const res = await fetch('/api/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData)
+    const res = await fetch("/api/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
     });
     const user = await res.json();
-    if (!res.ok) throw {message: 'Username already in use'};
+    if (!res.ok) throw { message: "Username already in use" };
     setUser(user);
   }
 
   async function logOut() {
-    if (user === null) throw {message: 'Already logged out'};
+    if (user === null) throw { message: "Already logged out" };
     setUser(null);
   }
 

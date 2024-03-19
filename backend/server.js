@@ -136,6 +136,21 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
+app.patch("/api/users/:id/:artworkId", async (req, res) => {
+  const userId = req.params.id;
+  const artworkId = req.params.artworkId;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $push: { favorites: artworkId } },
+      { new: true, upsert: false }
+    );
+    res.json(updatedUser);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
 async function main() {
   await mongoose.connect(MongoURL);
   console.log("Connected to database.");
