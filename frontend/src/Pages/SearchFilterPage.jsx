@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import Artwork from "../components/Artwork";
+import FilteredSearchForm from "../components/FilteredSearchForm";
 
 const fetchFiltered = async (url) => {
   const response = await fetch(url);
@@ -9,12 +10,17 @@ const fetchFiltered = async (url) => {
 
 const SearchFilterPage = () => {
   const [artworks, setArtworks] = useState([]);
+
   const [isTitleSearch, setIsTitleSearch] = useState(false);
-  const [isMediumSearch, setIsMediumSearch] = useState(false);
-  const [isArtistSearch, setIsArtistSearch] = useState(false);
   const [title, setTitle] = useState("");
+
+  const [isMediumSearch, setIsMediumSearch] = useState(false);
   const [mediumDisplay, setMediumDisplay] = useState("");
+
+  const [isArtistSearch, setIsArtistSearch] = useState(false);
   const [artistTitle, setArtistTitle] = useState("");
+
+  const [isSearchForm, setIsSearchForm] = useState(true)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -26,64 +32,30 @@ const SearchFilterPage = () => {
 
 
     const url = `/api/filteredSearch?${searchParams}`;
-    const artworks = await fetchFiltered(url)
+    const artworks = await fetchFiltered(url);
     setArtworks(artworks);
-    console.log(artworks);
+    setIsSearchForm(false)
 
   };
+  console.log(mediumDisplay);
+  console.log(artworks);
 
   return (
+    isSearchForm ? (
+     <FilteredSearchForm onSubmit={handleSubmit}
+     isTitleSearch={isTitleSearch}
+     setIsTitleSearch={setIsTitleSearch}
+     isArtistSearch={isArtistSearch}
+     setIsArtistSearch={setIsArtistSearch}
+     isMediumSearch={isMediumSearch} setIsMediumSearch={setIsMediumSearch}
+     title={title} setTitle={setTitle} setMediumDisplay={setMediumDisplay} artistTitle={artistTitle} setArtistTitle={setArtistTitle}/>
+    ): (
     <div className="artworkDiv">
-      <form onSubmit={(e)=>handleSubmit(e)}>
-        <label htmlFor="title">Title:</label>
-        <input
-          type="checkbox"
-          name="title"
-          id="title"
-          value={isTitleSearch}
-          onChange={() => setIsTitleSearch(!isTitleSearch)}
-        />
-        <input
-          type="text"
-          name="title"
-          id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <label htmlFor="medium_display">Medium:</label>
-        <input
-          type="checkbox"
-          name="medium_display"
-          id="medium_display"
-          value={isMediumSearch}
-          onChange={() => setIsMediumSearch(!isMediumSearch)}
-        />
-        <input
-          type="text"
-          name="medium_display"
-          id="medium_display"
-          value={mediumDisplay}
-          onChange={(e) => setMediumDisplay(e.target.value)}
-        />
-        <label htmlFor="artist_title">Artist name:</label>
-        <input
-          type="checkbox"
-          name="artist_title"
-          id="artist_title"
-          value={isArtistSearch}
-          onChange={() => setIsArtistSearch(!isArtistSearch)}
-        />
-        <input
-          type="text"
-          name="artist_title"
-          id="artist_title"
-          value={artistTitle}
-          onChange={(e) => setArtistTitle(e.target.value)}
-        />
-        <button type="submit" >Submit</button>
-      </form>
-    </div>
+    {artworks.map((artwork) => (
+        <Artwork artwork={artwork} key={artwork._id}/>
+   ))}
+      </div>)
   );
 };
 
-export default SearchFilterPage
+export default SearchFilterPage;

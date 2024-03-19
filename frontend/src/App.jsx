@@ -2,9 +2,6 @@ import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPage from "./Pages/MainPage";
 import ArtworkDetails from "./Pages/ArtworkDetails";
-import ArtistArtworks from "./Pages/ArtistArtworks";
-import ArtworksByMedium from "./Pages/ArtworksByMedium";
-import ArtworkType from "./Pages/ArtworkType";
 import Layout from "./Pages/Layout";
 import AdminPage from "./Pages/AdminPage";
 import AdminUpdaterPage from "./Pages/AdminUpdaterPage";
@@ -44,9 +41,6 @@ export default function App() {
     <Routes>
       <Route exact path="/" element={<MainPage />} />
       <Route exact path="/arts/:id/" element={<ArtworkDetails />} />
-      <Route exact path="/artist/:name/" element={<ArtistArtworks />} />
-      <Route exact path="/medium/:medium/" element={<ArtworksByMedium />} />
-      <Route exact path="/artwork/:type/" element={<ArtworkType />} />
       <Route exact path="/admin" element={<AdminPage />} />
       <Route exact path="/arts/update/:id" element={<AdminUpdaterPage />} />
       <Route exact path="/arts/create" element={<AdminCreatePage />} />
