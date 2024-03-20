@@ -80,7 +80,7 @@ export default function ArtworkDetails({user}) {
         <p onClick={() => navigate(`/medium/${artwork.medium_display}`)} style={{cursor: "pointer"}}>
           Artwork medium: {artwork.medium_display}
         </p>
-        <p onClick={() => navigate(`/artwork/${artwork.artwork_type_title}`)} style={{cursor: "pointer"}}>
+        <p onClick={() => navigate(`/artwork_type/${artwork.artwork_type_title}`)} style={{cursor: "pointer"}}>
           Artwork type: {artwork.artwork_type_title}
         </p>
         <button type="button" onClick={() => handleSave(artwork._id)}>Save to favorites</button>
