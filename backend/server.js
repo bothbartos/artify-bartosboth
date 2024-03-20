@@ -19,10 +19,7 @@ app.get("/api/pages/:page", async (req, res) => {
     const pageSize = Number(req.query.pageSize ?? 20);
     const pageNum = Number(req.params.page);
     const skipCount = (pageNum - 1) * pageSize;
-    const pageItems = await ArtModel.find()
-      .sort("createdAt")
-      .skip(skipCount)
-      .limit(pageSize);
+    const pageItems = await ArtModel.find().sort("createdAt").skip(skipCount).limit(pageSize);
     res.json({ results: pageItems });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -30,10 +27,9 @@ app.get("/api/pages/:page", async (req, res) => {
 });
 
 app.get("/api/filteredSearch", async (req, res) => {
-  
   try {
     const searchParams = req.query;
-    
+
     let query = ArtModel.find({});
     Object.entries(searchParams).forEach(([key, value]) => {
       query = query.find({ [key]: { $regex: value, $options: "i" } });
@@ -136,15 +132,16 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
-app.patch("/api/users/:id/:artworkId", async (req, res) => {
+app.patch("/api/users/:id/favorite", async (req, res) => {
   const userId = req.params.id;
-  const artworkId = req.params.artworkId;
+  const artworkId = req.body;
+
   try {
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { $push: { favorites: artworkId } },
+      { $push: { favorites: artworkId.artworkId } },
       { new: true, upsert: false }
-    ).populate('favorites');
+    ).populate("favorites");
     res.json(updatedUser);
   } catch (error) {
     return res.status(500).json({ error: error.message });
