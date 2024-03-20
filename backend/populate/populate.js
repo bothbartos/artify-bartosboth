@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import ArtModel from "../models/ArtModel.js";
+import UserModel from "../models/UserModel.js";
 import dotenv from "dotenv";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
@@ -15,18 +16,34 @@ async function fetchData(i) {
   return data;
 }
 
-async function populateArtModel() {
-  for(let i = 1; i<=10; i++){
-    const data = await fetchData(i);
-    for (const art of data.data) {
-      await ArtModel.create(art);
-    }
-  }
+async function populateArtModel(numberOfPages=10) {
+  await ArtModel.deleteMany({});
+  const pagePromises = [];
+  for (let i=0; i<numberOfPages; i++) {
+    const pagePromise = fetchData(i).then(data => {
+      return Promise.all(data.data.map(art => {
+        return ArtModel.create(art);
+      }));
+    });
+    pagePromises.push(pagePromise);
+  };
+  await Promise.all(pagePromises);
+}
+
+async function populateUserModel() {
+  await UserModel.deleteMany({});
+  await UserModel.create({
+    username: 'admin',
+    first_name: 'Ad',
+    last_name: 'min',
+    isAdmin: true,
+  });
 }
 
 async function main() {
   await mongoose.connect(MongoURL);
   await populateArtModel();
+  await populateUserModel();
   await mongoose.disconnect();
 }
 

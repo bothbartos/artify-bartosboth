@@ -28,6 +28,8 @@ function deleteHTMLTags(artwork) {
   return artwork.description.replace(/<\/?[^>]+(>|$)/g, "");
 }
 
+
+
 export default function ArtworkDetails({user}) {
   const [artwork, setArtwork] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -43,6 +45,7 @@ export default function ArtworkDetails({user}) {
   }, [id]);
 
   function handleSave(artworkId){
+    console.log(user);
     if(user){
       postSavedArtwork(user._id, artworkId).then((res) => console.log(res));
     } else {

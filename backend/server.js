@@ -2,9 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import ArtModel from "./models/ArtModel.js";
+import User from "./models/UserModel.js";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
-import User from "./models/User.js";
 
 const PORT = 3000;
 
