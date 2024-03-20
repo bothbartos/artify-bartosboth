@@ -40,20 +40,30 @@ export default function App() {
     setUser(null);
   }
 
-  return <BrowserRouter>
-    <Layout user={user} logIn={logIn} logOut={logOut} createUser={createUser} />
-    <Routes>
-      <Route exact path="/" element={<MainPage />} />
-      <Route exact path="/arts/:id/" element={<ArtworkDetails />} />
-      <Route exact path="/admin" element={<AdminPage />} />
-      <Route exact path="/arts/update/:id" element={<AdminUpdaterPage />} />
-      <Route exact path="/arts/create" element={<AdminCreatePage />} />
-      <Route exact path="/search/:search" element={<SearchResults/>}/>
-      <Route exact path="/filterSearch/" element={<SearchFilterPage/>}/>
-      <Route exact path="/artist/:name" element={<ArtistArtworks/>}/>
+  async function updateUser(updatedUser) {
+    setUser(updatedUser);
+  }
+
+  return (
+    <BrowserRouter>
+      <Layout user={user} logIn={logIn} logOut={logOut} createUser={createUser} />
+      <Routes>
+        <Route exact path="/" element={<MainPage />} />
+        <Route
+          exact
+          path="/arts/:id/"
+          element={<ArtworkDetails user={user} updateUser={updateUser} />}
+        />
+        <Route exact path="/admin" element={<AdminPage />} />
+        <Route exact path="/arts/update/:id" element={<AdminUpdaterPage />} />
+        <Route exact path="/arts/create" element={<AdminCreatePage />} />
+        <Route exact path="/search/:search" element={<SearchResults />} />
+        <Route exact path="/filterSearch/" element={<SearchFilterPage />} />
+        <Route exact path="/artist/:name" element={<ArtistArtworks/>}/>
       <Route exact path="/artwork_type/:type" element={<ArtworkType/>}/>
       <Route exact path="/medium/:medium" element={<ArtworksByMedium/>}/>
       <Route exact path="/filtered" element={<FilteredArtworks/>}/>
     </Routes>
-  </BrowserRouter>
+    </BrowserRouter>
+  );
 }

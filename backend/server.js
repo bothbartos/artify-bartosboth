@@ -19,10 +19,7 @@ app.get("/api/pages/:page", async (req, res) => {
     const pageSize = Number(req.query.pageSize ?? 20);
     const pageNum = Number(req.params.page);
     const skipCount = (pageNum - 1) * pageSize;
-    const pageItems = await ArtModel.find()
-      .sort("createdAt")
-      .skip(skipCount)
-      .limit(pageSize);
+    const pageItems = await ArtModel.find().sort("createdAt").skip(skipCount).limit(pageSize);
     res.json({ results: pageItems });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -120,7 +117,7 @@ app.post("/api/arts", async (req, res) => {
 
 app.get("/api/users/:username", async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username });
+    const user = await User.findOne({ username: req.params.username }).populate("favorites");
     if (user === null) throw { message: "User not found" };
     return res.json(user);
   } catch (error) {
@@ -143,20 +140,37 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
-app.patch("/api/users/:id/:artworkId", async (req, res) => {
+app.patch("/api/users/:id/favorite", async (req, res) => {
   const userId = req.params.id;
-  const artworkId = req.params.artworkId;
+  const artworkId = req.body;
+
   try {
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { $push: { favorites: artworkId } },
+      { $push: { favorites: artworkId.artworkId } },
       { new: true, upsert: false }
-    );
+    ).populate("favorites");
     res.json(updatedUser);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 });
+
+app.patch("/api/users/:id/deleteFavorite", async (req, res) => {
+  const userId = req.params.id;
+  const artworkId = req.body;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {$pull: {favorites: artworkId.artworkId}},
+      {new: true, upsert: false}
+    ).populate("favorites");
+    return res.send(updatedUser);
+  } catch (error) {
+    return res.status(500).json({error: error.message});
+  }
+})
 
 async function main() {
   await mongoose.connect(MongoURL);
