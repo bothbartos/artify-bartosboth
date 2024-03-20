@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Artwork from "../components/Artwork";
 
 
 const DisplayFavoritesPage = ({user}) => {
-  const [artworks, setArtworks] = useState(user?.favorites);
+  const [artworks] = useState(user?.favorites);
 
   return (
     <div className="artworkDiv">
