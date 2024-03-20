@@ -148,6 +148,22 @@ app.patch("/api/users/:id/favorite", async (req, res) => {
   }
 });
 
+app.patch("/api/users/:id/deleteFavorite", async (req, res) => {
+  const userId = req.params.id;
+  const artworkId = req.body;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {$pull: {favorites: artworkId.artworkId}},
+      {new: true, upsert: false}
+    ).populate("favorites");
+    return res.send(updatedUser);
+  } catch (error) {
+    return res.status(500).json({error: error.message});
+  }
+})
+
 async function main() {
   await mongoose.connect(MongoURL);
   console.log("Connected to database.");

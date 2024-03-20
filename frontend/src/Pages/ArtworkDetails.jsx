@@ -11,14 +11,14 @@ async function fetchArtwork(id) {
   }
 }
 
-async function postSavedArtwork(userId, artworkId) {
+async function postSavedArtwork(url, artworkId) {
   try {
-    const response = await fetch(`/api/users/${userId}/favorite`, {
+    const response = await fetch(url, {
       method: "PATCH",
-      headers:{
-        "content-type": "application/json"
+      headers: {
+        "content-type": "application/json",
       },
-      body:JSON.stringify({artworkId}),
+      body: JSON.stringify({ artworkId }),
     });
     const postedId = await response.json();
     return postedId;
@@ -53,11 +53,16 @@ export default function ArtworkDetails({ user, updateUser }) {
 
   function handleSave(artworkId) {
     if (user) {
-      if(buttonText === "Save to favorites"){
-        postSavedArtwork(user._id, artworkId).then((res) => updateUser(res));
+      if (buttonText === "Save to favorites") {
+        postSavedArtwork(`/api/users/${user._id}/favorite`, artworkId).then((res) =>
+          updateUser(res)
+        );
         setButtonText("Saved");
       } else {
-        //delete from favorites
+        postSavedArtwork(`/api/users/${user._id}/deleteFavorite`, artworkId).then((res) =>
+          updateUser(res)
+        );
+        setButtonText("Saved");
       }
     } else {
       alert("Please log in to save an artwork!");
