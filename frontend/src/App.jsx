@@ -1,4 +1,4 @@
-import { useAppContext, useState } from "react";
+import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPage from "./Pages/MainPage";
 import ArtworkDetails from "./Pages/ArtworkDetails";

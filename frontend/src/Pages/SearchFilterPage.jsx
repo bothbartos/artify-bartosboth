@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Artwork from "../components/Artwork";
 import FilteredSearchForm from "../components/FilteredSearchForm";
 
@@ -37,8 +37,6 @@ const SearchFilterPage = () => {
     setIsSearchForm(false)
 
   };
-  console.log(mediumDisplay);
-  console.log(artworks);
 
   return (
     isSearchForm ? (

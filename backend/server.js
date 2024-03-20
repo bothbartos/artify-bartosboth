@@ -3,8 +3,11 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import ArtModel from "./models/ArtModel.js";
 import User from "./models/UserModel.js";
+import "./models/CommentModel.js";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
+import UserModel from "./models/UserModel.js";
+import CommentModel from "./models/CommentModel.js";
 
 const PORT = 3000;
 
@@ -93,7 +96,7 @@ app.delete("/api/arts/:id", async (req, res) => {
 app.get("/api/arts/:id", async (req, res) => {
   const id = req.params.id;
   try {
-    const art = await ArtModel.findById(id);
+    const art = await ArtModel.findById(id).populate({path: "comments", populate: {path: 'author'}});
     return res.json(art);
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -128,7 +131,6 @@ app.post("/api/users", async (req, res) => {
       first_name,
       last_name,
       username,
-      favorites: [],
     });
     return res.json(user);
   } catch (error) {
@@ -136,9 +138,9 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
-app.patch("/api/users/:id/:artworkId", async (req, res) => {
+app.patch("/api/users/:id/favorite", async (req, res) => {
   const userId = req.params.id;
-  const artworkId = req.params.artworkId;
+  const artworkId = req.body.artworkId;
   try {
     const updatedUser = await User.findByIdAndUpdate(
       userId,
@@ -150,6 +152,37 @@ app.patch("/api/users/:id/:artworkId", async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 });
+
+app.post("/api/artworks/:id/comment", async (req, res) => {
+  const { userId, text } = req.body;
+  const parentId = req.params.id;
+  const comment = await CommentModel.create({
+    author: userId,
+    text,
+  });
+  await ArtModel.findByIdAndUpdate(parentId, {$push: {comments: comment._id}});
+  res.sendStatus(201);
+});
+
+app.post("/api/comments/:id/reply", async (req, res) => {
+  const { userId, text } = req.body;
+  const parentId = req.params.id;
+  const comment = await CommentModel.create({
+    author: userId,
+    text,
+  }).populate("author");
+  await CommentModel.findByIdAndUpdate(parentId, {$push: {replies: comment._id}});
+  res.sendStatus(201);
+});
+
+app.get("/api/comments", async (req, res) => {
+  const ids = req.query.ids?.split(',');
+  let query = CommentModel.find();
+  if (ids) query = query.find({_id: {$in: ids}});
+  const comments = await query.populate("author");
+  res.json(comments);
+});
+
 
 async function main() {
   await mongoose.connect(MongoURL);

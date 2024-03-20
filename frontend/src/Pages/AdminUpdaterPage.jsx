@@ -41,8 +41,6 @@ const AdminUpdaterPage = () => {
 		}
 	};
 
-	console.log(artwork);
-
 	if (!artwork) {
 		return (
 			<div>

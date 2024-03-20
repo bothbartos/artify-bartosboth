@@ -4,6 +4,7 @@ import UserModel from "../models/UserModel.js";
 import dotenv from "dotenv";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
+import CommentSchema from "../models/CommentModel.js";
 
 dotenv.config({ path: join(fileURLToPath(import.meta.url), "/../../.env") });
 const MongoURL = process.env.MONGO_URL;
@@ -22,7 +23,7 @@ async function populateArtModel(numberOfPages=10) {
   for (let i=0; i<numberOfPages; i++) {
     const pagePromise = fetchData(i).then(data => {
       return Promise.all(data.data.map(art => {
-        return ArtModel.create(art);
+        return ArtModel.create({...art, comments: []});
       }));
     });
     pagePromises.push(pagePromise);
@@ -37,13 +38,19 @@ async function populateUserModel() {
     first_name: 'Ad',
     last_name: 'min',
     isAdmin: true,
+    favorites: [],
   });
+}
+
+async function deleteComments() {
+  await CommentSchema.deleteMany({});
 }
 
 async function main() {
   await mongoose.connect(MongoURL);
   await populateArtModel();
   await populateUserModel();
+  await deleteComments();
   await mongoose.disconnect();
 }
 

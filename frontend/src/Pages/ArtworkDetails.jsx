@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Comments from "../components/Comments";
 
 async function fetchArtwork(id) {
   try {
@@ -13,9 +14,10 @@ async function fetchArtwork(id) {
 
 async function postSavedArtwork(userId, artworkId){
   try {
-    const response = await fetch(`/api/users/${userId}/${artworkId}`, {
+    const response = await fetch(`/api/users/${userId}/favorite`, {
       method: "PATCH",
-      body: artworkId
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify({ artworkId }),
     })
     const postedId = await response.json()
     return postedId;
@@ -38,16 +40,17 @@ export default function ArtworkDetails({user}) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchArtwork(id).then((artwork) => {
-      setArtwork(artwork);
-      setLoading(false);
-    });
-  }, [id]);
+    if (loading) {
+      fetchArtwork(id).then((artwork) => {
+        setArtwork(artwork);
+        setLoading(false);
+      });
+    }
+  }, [id, loading]);
 
   function handleSave(artworkId){
-    console.log(user);
     if(user){
-      postSavedArtwork(user._id, artworkId).then((res) => console.log(res));
+      postSavedArtwork(user._id, artworkId).then(() => alert('added to favorites'));
     } else {
       alert("Please log in to save an artwork!")
     }
@@ -60,7 +63,6 @@ export default function ArtworkDetails({user}) {
       </div>
     );
   }
-
   return (
     <div className="artworkDetails">
       <img
@@ -88,6 +90,7 @@ export default function ArtworkDetails({user}) {
         </p>
         <button type="button" onClick={() => handleSave(artwork._id)}>Save to favorites</button>
       </div>
+      <Comments userId={user?._id} artwork={artwork} refresh={() => setLoading(true)}></Comments>
     </div>
   );
 }
