@@ -42,11 +42,16 @@ export default function ArtworkDetails({ user, updateUser }) {
   useEffect(() => {
     fetchArtwork(id).then((artwork) => {
       setArtwork(artwork);
-      const favorites = user.favorites.map((favorite) => {
-        return favorite._id;
-      });
-      console.log(user);
-      setButtonText(favorites.includes(artwork._id) ? "Saved" : "Save to favorites");
+      if (user) {
+        const favorites = user.favorites.map((favorite) => {
+          return favorite._id;
+        });
+        setButtonText(
+          favorites.includes(artwork._id) ? "Saved" : "Save to favorites"
+        );
+      } else {
+        setButtonText("Save to favorites");
+      }
       setLoading(false);
     });
   }, [id, user]);
@@ -54,14 +59,15 @@ export default function ArtworkDetails({ user, updateUser }) {
   function handleSave(artworkId) {
     if (user) {
       if (buttonText === "Save to favorites") {
-        postSavedArtwork(`/api/users/${user._id}/favorite`, artworkId).then((res) =>
-          updateUser(res)
+        postSavedArtwork(`/api/users/${user._id}/favorite`, artworkId).then(
+          (res) => updateUser(res)
         );
         setButtonText("Saved");
       } else {
-        postSavedArtwork(`/api/users/${user._id}/deleteFavorite`, artworkId).then((res) =>
-          updateUser(res)
-        );
+        postSavedArtwork(
+          `/api/users/${user._id}/deleteFavorite`,
+          artworkId
+        ).then((res) => updateUser(res));
         setButtonText("Saved");
       }
     } else {
@@ -96,14 +102,21 @@ export default function ArtworkDetails({ user, updateUser }) {
             ? artwork.date_start
             : `${artwork.date_start} - ${artwork.date_end}`}
         </p>
-        <p>{artwork.description ? deleteHTMLTags(artwork) : "No description."}</p>
+        <p>
+          {artwork.description ? deleteHTMLTags(artwork) : "No description."}
+        </p>
         <p
           onClick={() => navigate(`/medium/${artwork.medium_display}`)}
           style={{ cursor: "pointer" }}
         >
           Artwork medium: {artwork.medium_display}
         </p>
-        <p onClick={() => navigate(`/artwork_type/${artwork.artwork_type_title}`)} style={{cursor: "pointer"}}>
+        <p
+          onClick={() =>
+            navigate(`/artwork_type/${artwork.artwork_type_title}`)
+          }
+          style={{ cursor: "pointer" }}
+        >
           Artwork type: {artwork.artwork_type_title}
         </p>
         <button type="button" onClick={() => handleSave(artwork._id)}>

@@ -12,6 +12,7 @@ import ArtistArtworks from "./Pages/ArtistArtworks";
 import ArtworkType from "./Pages/ArtworkType";
 import ArtworksByMedium from "./Pages/ArtworkByMedium";
 import FilteredArtworks from "./Pages/FilteredArtworks";
+import DisplayFavoritesPage from "./Pages/DisplayFavoritesPage";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -63,6 +64,7 @@ export default function App() {
       <Route exact path="/artwork_type/:type" element={<ArtworkType/>}/>
       <Route exact path="/medium/:medium" element={<ArtworksByMedium/>}/>
       <Route exact path="/filtered" element={<FilteredArtworks/>}/>
+      <Route exact path="/favorites" element={<DisplayFavoritesPage user={user}/>}/>
     </Routes>
     </BrowserRouter>
   );

@@ -147,7 +147,7 @@ app.patch("/api/users/:id/favorite", async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { $push: { favorites: artworkId.artworkId } },
+      { $addToSet: { favorites: artworkId.artworkId } },
       { new: true, upsert: false }
     ).populate("favorites");
     res.json(updatedUser);
