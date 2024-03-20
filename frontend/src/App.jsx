@@ -8,6 +8,10 @@ import AdminUpdaterPage from "./Pages/AdminUpdaterPage";
 import AdminCreatePage from "./Pages/AdminCreatePage";
 import SearchResults from "./Pages/SearchResults";
 import SearchFilterPage from "./Pages/SearchFilterPage";
+import ArtistArtworks from "./Pages/ArtistArtworks";
+import ArtworkType from "./Pages/ArtworkType";
+import ArtworksByMedium from "./Pages/ArtworkByMedium";
+import FilteredArtworks from "./Pages/FilteredArtworks";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -55,7 +59,11 @@ export default function App() {
         <Route exact path="/arts/create" element={<AdminCreatePage />} />
         <Route exact path="/search/:search" element={<SearchResults />} />
         <Route exact path="/filterSearch/" element={<SearchFilterPage />} />
-      </Routes>
+        <Route exact path="/artist/:name" element={<ArtistArtworks/>}/>
+      <Route exact path="/artwork_type/:type" element={<ArtworkType/>}/>
+      <Route exact path="/medium/:medium" element={<ArtworksByMedium/>}/>
+      <Route exact path="/filtered" element={<FilteredArtworks/>}/>
+    </Routes>
     </BrowserRouter>
   );
 }

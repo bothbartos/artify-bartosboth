@@ -26,16 +26,24 @@ app.get("/api/pages/:page", async (req, res) => {
   }
 });
 
-app.get("/api/filteredSearch", async (req, res) => {
+app.get("/api/filteredSearch/:page", async (req, res) => {
   try {
     const searchParams = req.query;
-
+    const pageSize = Number(req.query.pageSize ?? 20);
+    const pageNum = Number(req.params.page);
+    const skipCount = (pageNum - 1) * pageSize;
     let query = ArtModel.find({});
     Object.entries(searchParams).forEach(([key, value]) => {
-      query = query.find({ [key]: { $regex: value, $options: "i" } });
+      query = query
+        .find({ [key]: { $regex: value, $options: "i" } })
+        .sort("createdAt")
+        .skip(skipCount)
+        .limit(pageSize)
+        
     });
-
+    console.log(searchParams);
     const filteredByField = await query;
+    console.log(filteredByField);
     res.json(filteredByField);
   } catch (error) {
     res.status(500).json({ error: error.message });
