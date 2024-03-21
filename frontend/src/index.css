@@ -1,5 +1,13 @@
+body {
+  background-image: url(/src/freestyle_background.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  margin: 0;
+}
+
 .navBar {
-  position: fixed;
+  margin-top: 0;
+  position: sticky;
   top: 0;
   display: flex;
   flex-direction: row;
@@ -16,25 +24,23 @@
 }
 
 .artworkDetails {
-  margin-top: 27rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 50% 50%;
   height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-.artworkDetails img {
-  box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.6);
-  height: 70rem;
 }
 
 .details {
   background-color: rgba(255, 255, 255, 0.6);
   text-align: center;
   margin-top: 10px;
-  width: 80%;
+  width: 100%;
 }
+.artworkDetails img {
+  box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.6);
+  width: 100%
+}
+
 
 .login {
   display: flex;
@@ -163,13 +169,31 @@ button:hover::before {
   cursor: pointer;
 }
 
-body {
-  background-image: url(/src/freestyle_background.jpg);
-  background-size: cover;
-  background-attachment: fixed;
-}
-
 .adminPage{
   background-color: rgba(255, 255, 255, 0.843);
   margin-top: 3rem;
+}
+
+.Comment {
+  margin-left: 0.5rem;
+}
+
+.Comment .body{
+  margin-left: 0.5rem;
+  background-color: white;
+}
+
+.Comment .footer {
+  display: flex;
+  justify-content: left;
+}
+
+.Comment .replies {
+  border-left: 2px solid black;
+}
+.Comment .author::before {
+  content: "Author: ";
+}
+.Comment .body p::before {
+  content: "Message: ";
 }

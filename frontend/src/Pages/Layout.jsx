@@ -22,6 +22,7 @@ export default function Layout(props) {
       <input type="text" onChange={(e) => setSearchedArtist(e.target.value)} ></input>
       <button disabled={searchedArtist === undefined}>Search</button>
     </form>
+    <button type="button" onClick={()=> navigate("/filterSearch")}>Filtered Search</button>
     <ManageUser
       user={props.user}
       logIn={props.logIn}
