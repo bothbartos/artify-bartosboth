@@ -42,16 +42,15 @@ export default function ArtworkDetails({ user, updateUser }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
+
+
   useEffect(() => {
-    if (!loading) return;
     fetchArtwork(id).then((artwork) => {
       setArtwork(artwork);
       if (user) {
-        const favorites = user.favorites.map((favorite) => {
-          return favorite._id;
-        });
+        const favoriteIds = user.favorites.map(f => f._id);
         setButtonText(
-          favorites.includes(artwork._id) ? "Saved" : "Save to favorites"
+          favoriteIds.includes(artwork._id) ? "Saved" : "Save to favorites"
         );
       } else {
         setButtonText("Save to favorites");
