@@ -20,11 +20,8 @@ export default function NewComment({userId, parentId, isReply=false, refreshComm
     refreshComments();
   }
   return <>
-    <form onSubmit={onSubmit}>
-      <label>
-        Write a new comment:
-        <textarea name="text" id="commentBox" onChange={e => setText(e.target.value)}></textarea>
-      </label>
+    <form className="NewComment" onSubmit={onSubmit}>
+      <textarea name="text" id={`comment-${parentId}`} onChange={e => setText(e.target.value)}></textarea>
       <button type="submit">Post</button>
     </form>
   </>

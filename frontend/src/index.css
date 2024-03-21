@@ -1,13 +1,16 @@
 body {
+  margin: 0;
+}
+#root {
+  position: relative;
+  height: 100vh;
   background-image: url(/src/freestyle_background.jpg);
   background-size: cover;
   background-attachment: fixed;
-  margin: 0;
 }
 
 .navBar {
   margin-top: 0;
-  position: sticky;
   top: 0;
   display: flex;
   flex-direction: row;
@@ -20,35 +23,30 @@ body {
 }
 
 
-/* Details */
-#root .details {
-  transform: translatex(-6px) translatey(107px);
-}
-
 .filterFormDiv{
   margin-top: 10rem
 }
 
 .artworkDetails {
-  margin-bottom: 12rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: calc(100% - 80px);
   display: grid;
   grid-template-columns: 50% 50%;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.artworkDetails>* {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 .details {
   background-color: rgba(255, 255, 255, 0.6);
   text-align: center;
-  margin-top: 10px;
   width: 100%;
 }
 .artworkDetails img {
   box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.6);
-  height:10px;
+  width: 100%;
 }
 
 
@@ -118,7 +116,7 @@ form[name="create"] > label {
   display: flex;
   flex-wrap: wrap;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   text-align: center;
   margin-top: 0rem;
@@ -146,8 +144,8 @@ button {
   position: relative;
   font-weight: 1000;
   font-size: 17px;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+  -webkit-box-shadow: 0 0 19px -3px rgba(0, 0, 0, 0.27);
+  box-shadow: 0 0 19px -3px rgba(0, 0, 0, 0.27);
   transition: all 250ms;
   overflow: hidden;
 }
@@ -191,18 +189,29 @@ body {
 }
 
 .Comment {
+  display: flex;
+  flex-direction: column;
   margin-left: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.6);
-  text-align: center;
-  margin-top: 10px;
-  width: 100%;
+}
+
+
+.Comment p{
+  margin: 0;
+  padding: 0;
+  display: inline-block;
 }
 
 .Comment .body{
-  margin-left: 0.5rem;
+  display: flex;
+}
+
+.Comment .body p{
+  margin-right: 0.5rem;
+  padding-inline: 0.5rem;
+  border-radius: 0.5rem;
   background-color: white;
-  border-radius: 10px;
-  height: 1.4rem;
+  min-height: 3em;
+  flex: 1;
 }
 
 .Comment .footer {
@@ -210,14 +219,27 @@ body {
   justify-content: left;
 }
 
+.Comment .footer button:not(:last-child) {
+  border-radius: 5px;
+  width: 10px;
+  padding: 0;
+  margin: 0;
+}
+
+
 .Comment .replies {
-  border-left: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
-.Comment .author::before {
+
+.Comment .header::before {
   content: "Author: ";
+  margin-right: 0.5rem;
 }
-.Comment .body p::before {
+.Comment .body::before {
   content: "Message: ";
+  margin-right: 0.5rem;
 }
 
 .Comment:focus-within .body form{
@@ -228,8 +250,21 @@ body {
   display: none;
 }
 
-.footer button {
-  width: 1px;
-  padding: 0.3px;
+.Comments {
+  background-color: rgba(127, 127, 127, 0.5);
 }
+
+.Comments>.NewComment::before {
+  content: "Write a new comment: ";
+}
+
+/* .NewComment{
+  display: flex;
+  justify-content: space-between;
+} */
+
+.NewComment textarea{
+  flex: 1;
+}
+
 
