@@ -29,9 +29,9 @@ const FilteredArtworks = () => {
 
   const [searchParams] = useSearchParams();
 
-  const title = searchParams.get('title');
- const mediumDisplay = searchParams.get('medium_display');
- const artistTitle = searchParams.get('artist_title');
+  const title = searchParams.get("title");
+  const mediumDisplay = searchParams.get("medium_display");
+  const artistTitle = searchParams.get("artist_title");
 
   useEffect(() => {
     async function fetchArtworks(
@@ -62,10 +62,12 @@ const FilteredArtworks = () => {
   };
 
   return (
-    <div className="artworkDiv">
-      {artworks.map((artwork) => (
-        <Artwork artwork={artwork} key={artwork._id} />
-      ))}
+    <>
+      <div className="artworkDiv">
+        {artworks.map((artwork) => (
+          <Artwork artwork={artwork} key={artwork._id} />
+        ))}
+      </div>
       <div className="paginatonButtons">
         <button
           onClick={() => setCurrentPage(currentPage - 1)}
@@ -84,7 +86,7 @@ const FilteredArtworks = () => {
           Next Page
         </button>
       </div>
-    </div>
+    </>
   );
 };
 
