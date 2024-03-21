@@ -43,6 +43,7 @@ export default function ArtworkDetails({ user, updateUser }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!loading) return;
     fetchArtwork(id).then((artwork) => {
       setArtwork(artwork);
       if (user) {
@@ -57,7 +58,7 @@ export default function ArtworkDetails({ user, updateUser }) {
       }
       setLoading(false);
     });
-  }, [id, user]);
+  }, [id, user, loading]);
 
   function handleSave(artworkId) {
     if (user) {

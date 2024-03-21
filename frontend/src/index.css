@@ -201,11 +201,25 @@ body {
   display: inline-block;
 }
 
-.Comment .body{
+.Comment .replyButton{
+  width: fit-content;
+}
+
+.Comment .body {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.Comment .replyButton{
+  align-self: end;
+}
+
+.Comment .body .text{
   display: flex;
 }
 
-.Comment .body p{
+.Comment .body .text p{
   margin-right: 0.5rem;
   padding-inline: 0.5rem;
   border-radius: 0.5rem;
@@ -219,7 +233,7 @@ body {
   justify-content: left;
 }
 
-.Comment .footer button:not(:last-child) {
+.Comment .collapseButton {
   border-radius: 5px;
   width: 10px;
   padding: 0;
@@ -237,17 +251,9 @@ body {
   content: "Author: ";
   margin-right: 0.5rem;
 }
-.Comment .body::before {
+.Comment .body .text::before {
   content: "Message: ";
   margin-right: 0.5rem;
-}
-
-.Comment:focus-within .body form{
-  display:initial;
-
-};
-.Comment .body form{
-  display: none;
 }
 
 .Comments {
@@ -258,12 +264,20 @@ body {
   content: "Write a new comment: ";
 }
 
-/* .NewComment{
+.NewComment{
   display: flex;
   justify-content: space-between;
-} */
+  align-items: center;
+}
+
+.NewComment .buttons{
+  display: flex;
+  flex-direction: column;
+}
+
 
 .NewComment textarea{
+  min-height: 5em;
   flex: 1;
 }
 

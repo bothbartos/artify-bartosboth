@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-export default function NewComment({userId, parentId, isReply=false, refreshComments}) {
+export default function NewComment({userId, parentId, isReply=false, refreshComments, onCancel}) {
   const [text, setText] = useState('');
 
-  async function onSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const url = isReply
     ? `/api/comments/${parentId}/reply`
@@ -20,9 +20,12 @@ export default function NewComment({userId, parentId, isReply=false, refreshComm
     refreshComments();
   }
   return <>
-    <form className="NewComment" onSubmit={onSubmit}>
+    <form className="NewComment" onSubmit={handleSubmit}>
       <textarea name="text" id={`comment-${parentId}`} onChange={e => setText(e.target.value)}></textarea>
-      <button type="submit">Post</button>
+      <div className="buttons">
+        <button type="submit">Post</button>
+        {isReply && <button type="button" onClick={onCancel}>Cancel</button>}
+      </div>
     </form>
   </>
 }
