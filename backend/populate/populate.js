@@ -11,7 +11,7 @@ const MongoURL = process.env.MONGO_URL;
 
 async function fetchData(i) {
   const response = await fetch(
-    `https://api.artic.edu/api/v1/artworks?page=${i}&fields=title%2Cdescription%2Cshort_description%2Cimage_id%2Cartist_title%2Cartwork_type_title%2Cmedium_display%2Cdate_start%2Cdate_end`
+    `https://api.artic.edu/api/v1/artworks?page=${i}&limit=1&fields=title%2Cdescription%2Cshort_description%2Cimage_id%2Cartist_title%2Cartwork_type_title%2Cmedium_display%2Cdate_start%2Cdate_end`
   );
   const data = await response.json();
   return data;

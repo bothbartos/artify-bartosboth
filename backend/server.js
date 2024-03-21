@@ -22,27 +22,31 @@ app.get("/api/pages/:page", async (req, res) => {
     const pageSize = Number(req.query.pageSize ?? 20);
     const pageNum = Number(req.params.page);
     const skipCount = (pageNum - 1) * pageSize;
-    const pageItems = await ArtModel.find()
-      .sort("createdAt")
-      .skip(skipCount)
-      .limit(pageSize);
+    const pageItems = await ArtModel.find().sort("createdAt").skip(skipCount).limit(pageSize);
     res.json({ results: pageItems });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.get("/api/filteredSearch", async (req, res) => {
-  
+app.get("/api/filteredSearch/:page", async (req, res) => {
   try {
     const searchParams = req.query;
-    
+    const pageSize = Number(req.query.pageSize ?? 20);
+    const pageNum = Number(req.params.page);
+    const skipCount = (pageNum - 1) * pageSize;
     let query = ArtModel.find({});
     Object.entries(searchParams).forEach(([key, value]) => {
-      query = query.find({ [key]: { $regex: value, $options: "i" } });
+      query = query
+        .find({ [key]: { $regex: value, $options: "i" } })
+        .sort("createdAt")
+        .skip(skipCount)
+        .limit(pageSize)
+        
     });
-
+    console.log(searchParams);
     const filteredByField = await query;
+    console.log(filteredByField);
     res.json(filteredByField);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -116,7 +120,7 @@ app.post("/api/arts", async (req, res) => {
 
 app.get("/api/users/:username", async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username });
+    const user = await User.findOne({ username: req.params.username }).populate("favorites");
     if (user === null) throw { message: "User not found" };
     return res.json(user);
   } catch (error) {
@@ -140,18 +144,35 @@ app.post("/api/users", async (req, res) => {
 
 app.patch("/api/users/:id/favorite", async (req, res) => {
   const userId = req.params.id;
-  const artworkId = req.body.artworkId;
+  const artworkId = req.body;
+
   try {
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { $push: { favorites: artworkId } },
+      { $addToSet: { favorites: artworkId.artworkId } },
       { new: true, upsert: false }
-    );
+    ).populate("favorites");
     res.json(updatedUser);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 });
+
+app.patch("/api/users/:id/deleteFavorite", async (req, res) => {
+  const userId = req.params.id;
+  const artworkId = req.body;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {$pull: {favorites: artworkId.artworkId}},
+      {new: true, upsert: false}
+    ).populate("favorites");
+    return res.send(updatedUser);
+  } catch (error) {
+    return res.status(500).json({error: error.message});
+  }
+})
 
 app.post("/api/artworks/:id/comment", async (req, res) => {
   const { userId, text } = req.body;

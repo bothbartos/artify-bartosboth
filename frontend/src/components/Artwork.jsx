@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const Artwork = ({ artwork }) => {
+const   Artwork = ({ artwork }) => {
   const navigate = useNavigate();
 
   return (

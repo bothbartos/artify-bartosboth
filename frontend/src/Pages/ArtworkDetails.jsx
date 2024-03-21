@@ -12,14 +12,16 @@ async function fetchArtwork(id) {
   }
 }
 
-async function postSavedArtwork(userId, artworkId){
+async function postSavedArtwork(url, artworkId) {
   try {
-    const response = await fetch(`/api/users/${userId}/favorite`, {
+    const response = await fetch(url, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json"},
+      headers: {
+        "content-type": "application/json",
+      },
       body: JSON.stringify({ artworkId }),
-    })
-    const postedId = await response.json()
+    });
+    const postedId = await response.json();
     return postedId;
   } catch (error) {
     console.error(error);
@@ -32,27 +34,47 @@ function deleteHTMLTags(artwork) {
 
 
 
-export default function ArtworkDetails({user}) {
+export default function ArtworkDetails({ user, updateUser }) {
   const [artwork, setArtwork] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [buttonText, setButtonText] = useState("Save to favorites");
 
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading) {
-      fetchArtwork(id).then((artwork) => {
-        setArtwork(artwork);
-        setLoading(false);
-      });
-    }
-  }, [id, loading]);
+    fetchArtwork(id).then((artwork) => {
+      setArtwork(artwork);
+      if (user) {
+        const favorites = user.favorites.map((favorite) => {
+          return favorite._id;
+        });
+        setButtonText(
+          favorites.includes(artwork._id) ? "Saved" : "Save to favorites"
+        );
+      } else {
+        setButtonText("Save to favorites");
+      }
+      setLoading(false);
+    });
+  }, [id, user]);
 
-  function handleSave(artworkId){
-    if(user){
-      postSavedArtwork(user._id, artworkId).then(() => alert('added to favorites'));
+  function handleSave(artworkId) {
+    if (user) {
+      if (buttonText === "Save to favorites") {
+        postSavedArtwork(`/api/users/${user._id}/favorite`, artworkId).then(
+          (res) => updateUser(res)
+        );
+        setButtonText("Saved");
+      } else {
+        postSavedArtwork(
+          `/api/users/${user._id}/deleteFavorite`,
+          artworkId
+        ).then((res) => updateUser(res));
+        setButtonText("Saved");
+      }
     } else {
-      alert("Please log in to save an artwork!")
+      alert("Please log in to save an artwork!");
     }
   }
 
@@ -71,7 +93,10 @@ export default function ArtworkDetails({user}) {
           alt="art"
         ></img>
         <h3>Title: {artwork.title ? artwork.title : "No title"}</h3>
-        <h3 onClick={() => navigate(`/artist/${artwork.artist_title}`)} style={{cursor:"pointer"}}>
+        <h3
+          onClick={() => navigate(`/artist/${artwork.artist_title}`)}
+          style={{ cursor: "pointer" }}
+        >
           Artist name: {artwork.artist_title ? artwork.artist_title : "Unknown"}
         </h3>
         <p>
@@ -82,13 +107,23 @@ export default function ArtworkDetails({user}) {
         <p>
           {artwork.description ? deleteHTMLTags(artwork) : "No description."}
         </p>
-        <p onClick={() => navigate(`/medium/${artwork.medium_display}`)} style={{cursor: "pointer"}}>
+        <p
+          onClick={() => navigate(`/medium/${artwork.medium_display}`)}
+          style={{ cursor: "pointer" }}
+        >
           Artwork medium: {artwork.medium_display}
         </p>
-        <p onClick={() => navigate(`/artwork/${artwork.artwork_type_title}`)} style={{cursor: "pointer"}}>
+        <p
+          onClick={() =>
+            navigate(`/artwork_type/${artwork.artwork_type_title}`)
+          }
+          style={{ cursor: "pointer" }}
+        >
           Artwork type: {artwork.artwork_type_title}
         </p>
-        <button type="button" onClick={() => handleSave(artwork._id)}>Save to favorites</button>
+        <button type="button" onClick={() => handleSave(artwork._id)}>
+          {buttonText}
+        </button>
       </div>
       <Comments userId={user?._id} artwork={artwork} refresh={() => setLoading(true)}></Comments>
     </div>
