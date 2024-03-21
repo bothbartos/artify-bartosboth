@@ -42,6 +42,14 @@ const AdminPage = () => {
 			console.log(error);
 		}
 	};
+  
+  if (loading) {
+    return (
+      <div className="loading">
+        <h1>LOADING...</h1>
+      </div>
+    );
+  }
 
 	return (
 		<div className="adminPage">

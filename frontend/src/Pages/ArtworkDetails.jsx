@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Comments from "../components/Comments";
 
 async function fetchArtwork(id) {
   try {
@@ -30,6 +31,8 @@ async function postSavedArtwork(url, artworkId) {
 function deleteHTMLTags(artwork) {
   return artwork.description.replace(/<\/?[^>]+(>|$)/g, "");
 }
+
+
 
 export default function ArtworkDetails({ user, updateUser }) {
   const [artwork, setArtwork] = useState(null);
@@ -82,14 +85,13 @@ export default function ArtworkDetails({ user, updateUser }) {
       </div>
     );
   }
-
   return (
     <div className="artworkDetails">
-      <img
-        src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
-        alt="art"
-      ></img>
       <div className="details">
+        <img
+          src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
+          alt="art"
+        ></img>
         <h3>Title: {artwork.title ? artwork.title : "No title"}</h3>
         <h3
           onClick={() => navigate(`/artist/${artwork.artist_title}`)}
@@ -123,6 +125,7 @@ export default function ArtworkDetails({ user, updateUser }) {
           {buttonText}
         </button>
       </div>
+      <Comments userId={user?._id} artwork={artwork} refresh={() => setLoading(true)}></Comments>
     </div>
   );
 }
