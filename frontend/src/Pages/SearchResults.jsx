@@ -17,7 +17,6 @@ export default function SearchResults() {
   const [artistsArtworks, setArtistsArtworks] = useState([]);
 
   const { search } = useParams();
-  console.log(search);
 
   useEffect(()=> {
     fetchArtworks(search)

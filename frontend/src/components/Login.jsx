@@ -4,7 +4,6 @@ export default function LoginPage(props) {
     event.preventDefault();
     const formValues = Object.fromEntries((new FormData(event.target)).entries());
     try {
-      console.log('asd', formValues.username);
       await logIn(formValues.username);
     } catch (error) {
       warn(error.message);

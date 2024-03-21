@@ -26,7 +26,6 @@ const MainPage = () => {
 	const hideButton = (pageNumber) => {
 		return pageNumber < 1 || pageNumber > 10;
 	};
-  console.log(artworks);
 	return (
 		<>
 			{loading ? (
