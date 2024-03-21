@@ -65,11 +65,11 @@ export default function ArtworkDetails({user}) {
   }
   return (
     <div className="artworkDetails">
-      <img
-        src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
-        alt="art"
-      ></img>
       <div className="details">
+        <img
+          src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
+          alt="art"
+        ></img>
         <h3>Title: {artwork.title ? artwork.title : "No title"}</h3>
         <h3 onClick={() => navigate(`/artist/${artwork.artist_title}`)} style={{cursor:"pointer"}}>
           Artist name: {artwork.artist_title ? artwork.artist_title : "Unknown"}

@@ -170,7 +170,7 @@ app.post("/api/comments/:id/reply", async (req, res) => {
   const comment = await CommentModel.create({
     author: userId,
     text,
-  }).populate("author");
+  });
   await CommentModel.findByIdAndUpdate(parentId, {$push: {replies: comment._id}});
   res.sendStatus(201);
 });
