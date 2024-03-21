@@ -15,15 +15,30 @@ body {
   justify-content: space-evenly;
   z-index: 1000;
   width: 100%;
+  height: 80px;
   background-color: white;
 }
+#root img {
+  transform: translatex(0px) translatey(116px);
+  height: 583px;
+}
 
-.navBar a {
-  text-decoration: none;
-  color: black;
+/* Details */
+#root .details {
+  transform: translatex(-6px) translatey(107px);
+}
+
+.filterFormDiv{
+  margin-top: 10rem
 }
 
 .artworkDetails {
+  margin-top: 83px;
+  margin-bottom: 12rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   display: grid;
   grid-template-columns: 50% 50%;
   height: 100vh;
@@ -111,8 +126,8 @@ form[name="create"] > label {
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin-top: 6rem;
-  margin-bottom: 3rem;
+  margin-top: 0rem;
+  margin-bottom: 7rem;
   width: 100%; /* Ensure it takes up the full width */
   position: relative; /* Keep this for positioning the pagination buttons */
 }
@@ -122,7 +137,8 @@ form[name="create"] > label {
   gap: 3rem;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
+  transform: translatex(0px) translatey(50px);
+  margin-bottom: 5rem;
 }
 
 button {
@@ -165,11 +181,16 @@ button:hover::before {
   width: 100%;
 }
 
-.selectSearch{
+.selectSearch {
   cursor: pointer;
 }
+body {
+  background-image: url(/src/freestyle_background.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+}
 
-.adminPage{
+.adminPage {
   background-color: rgba(255, 255, 255, 0.843);
   margin-top: 3rem;
 }

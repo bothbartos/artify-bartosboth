@@ -7,7 +7,7 @@ const FilteredSearchForm = ({ onSubmit }) => {
   const [artistTitle, setArtistTitle] = useState("");
 
   return (
-    <div className="artworkDiv">
+    <div className="filterFormDiv">
       <form onSubmit={(e) => onSubmit( e,
     title,
     mediumDisplay,
