@@ -18,10 +18,7 @@ body {
   height: 80px;
   background-color: white;
 }
-#root img {
-  transform: translatex(0px) translatey(116px);
-  height: 583px;
-}
+
 
 /* Details */
 #root .details {
@@ -33,7 +30,6 @@ body {
 }
 
 .artworkDetails {
-  margin-top: 83px;
   margin-bottom: 12rem;
   display: flex;
   flex-direction: column;
@@ -41,7 +37,6 @@ body {
   align-items: center;
   display: grid;
   grid-template-columns: 50% 50%;
-  height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -53,7 +48,7 @@ body {
 }
 .artworkDetails img {
   box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.6);
-  width: 100%
+  height:10px;
 }
 
 
@@ -197,11 +192,17 @@ body {
 
 .Comment {
   margin-left: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin-top: 10px;
+  width: 100%;
 }
 
 .Comment .body{
   margin-left: 0.5rem;
   background-color: white;
+  border-radius: 10px;
+  height: 1.4rem;
 }
 
 .Comment .footer {
@@ -218,3 +219,17 @@ body {
 .Comment .body p::before {
   content: "Message: ";
 }
+
+.Comment:focus-within .body form{
+  display:initial;
+
+};
+.Comment .body form{
+  display: none;
+}
+
+.footer button {
+  width: 1px;
+  padding: 0.3px;
+}
+
