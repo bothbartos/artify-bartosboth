@@ -21,19 +21,20 @@ export default function Comment({ comment, userId, refreshComments}) {
       <p className="author">{comment.author.username}</p>
     </div>
     <div className="body">
-      <p>{comment.text}</p>
+      <div className="text">
+        <p>{comment.text}</p>
+      </div>
       {userId && <>
-        <button onClick={() => setDisplayBox(true)}>Reply</button>
-        {displayBox && <>
-          <NewComment userId={userId} parentId={comment._id} isReply refreshComments={refreshComments}/>
-        </>}
+        {displayBox
+        ? <NewComment userId={userId} parentId={comment._id} isReply refreshComments={refreshComments} onCancel={() => setDisplayBox(false)}/>
+        : <button className="replyButton" onClick={() => setDisplayBox(true)}>Reply</button>}
       </>}
     </div>
     <div className="footer">
       {(comment?.replies?.length > 0) 
       ? (isExpanded
         ? <>
-          <button onClick={() => setExpanded(false)}></button>
+          <button className="collapseButton" onClick={() => setExpanded(false)}></button>
           <div className="replies">
             {replies && replies.map(reply => <Comment
               key={reply._id}

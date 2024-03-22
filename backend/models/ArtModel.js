@@ -13,7 +13,7 @@ const ArtSchema = new Schema({
   artwork_type_title: String,
   artist_title: String,
   image_id: String,
-  comments: [{type: Schema.Types.ObjectId, ref: "Comment"}],
+  comments: {type: [{type: Schema.Types.ObjectId, ref: "Comment"}], default: []},
 }, {
   timestamps: true,
 });
